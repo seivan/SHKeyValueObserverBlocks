@@ -3,7 +3,7 @@ Pod::Spec.new do |s|
   url     = "https://github.com/seivan/#{name}"
   git_url = "#{url}.git"
   s.name         = name
-  s.version      = "0.1.0"
+  s.version      = "0.2.0"
   s.summary      = "Prefixed self removing Key Value Observers with Blocks."
   s.description  = <<-DESC
 
@@ -28,8 +28,8 @@ Pod::Spec.new do |s|
   s.source       = { :git => git_url, :tag => s.version.to_s }
   
 
-  s.platform  = :ios, "6.0"
-  s.platform  = :osx, "10.8"
+  s.ios.deployment_target = '6.0'
+  s.osx.deployment_target = '10.8'
 
   s.source_files = "#{name}/**/*.{h,m}"
   s.requires_arc = true
