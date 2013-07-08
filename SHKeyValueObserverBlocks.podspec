@@ -1,9 +1,12 @@
 Pod::Spec.new do |s|
-  name    = "SHKeyValueObserverBlocks"
-  url     = "https://github.com/seivan/#{name}"
-  git_url = "#{url}.git"
+  name         = "SHKeyValueObserverBlocks"
+  url          = "https://github.com/seivan/#{name}"
+  git_url      = "#{url}.git"
+  version      = "0.2.1"
+  source_files = "#{name}/**/*.{h,m}"
+  
   s.name         = name
-  s.version      = "0.2.0"
+  s.version      = version
   s.summary      = "Prefixed self removing Key Value Observers with Blocks."
   s.description  = <<-DESC
 
@@ -25,12 +28,12 @@ Pod::Spec.new do |s|
   s.license      = 'MIT'
   s.author       = { "Seivan Heidari" => "seivan.heidari@icloud.com" }
   
-  s.source       = { :git => git_url, :tag => s.version.to_s }
+  s.source       = { :git => git_url, :tag => version }
   
 
   s.ios.deployment_target = '6.0'
   s.osx.deployment_target = '10.8'
 
-  s.source_files = "#{name}/**/*.{h,m}"
+  s.source_files = source_files
   s.requires_arc = true
 end
