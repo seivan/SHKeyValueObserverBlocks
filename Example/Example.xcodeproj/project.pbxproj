@@ -42,7 +42,6 @@
 		22D3AEC71742D9B8000AB469 /* SHViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SHViewController.m; sourceTree = "<group>"; };
 		22D3AED11742E928000AB469 /* SHSecondViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHSecondViewController.h; sourceTree = "<group>"; };
 		22D3AED21742E928000AB469 /* SHSecondViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHSecondViewController.m; sourceTree = "<group>"; };
-		22D3AED817448D70000AB469 /* SHExampleProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SHExampleProtocol.h; sourceTree = "<group>"; };
 		2A3799792E664CC2A299F48B /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -96,7 +95,6 @@
 				22D3AEBA1742D9B8000AB469 /* SHAppDelegate.h */,
 				22D3AEBB1742D9B8000AB469 /* SHAppDelegate.m */,
 				22D3AEC31742D9B8000AB469 /* MainStoryboard.storyboard */,
-				22D3AED817448D70000AB469 /* SHExampleProtocol.h */,
 				22D3AEC61742D9B8000AB469 /* SHViewController.h */,
 				22D3AEC71742D9B8000AB469 /* SHViewController.m */,
 				22D3AED11742E928000AB469 /* SHSecondViewController.h */,

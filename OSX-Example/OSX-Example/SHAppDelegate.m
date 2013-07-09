@@ -8,37 +8,101 @@
 
 #import "SHAppDelegate.h"
 #import "SHKeyValueObserverBlocks.h"
+@interface SHBackPack : NSObject
+@property(nonatomic,strong) NSMutableArray * items;
+@end
+
+@implementation SHBackPack
+-(instancetype)init; {
+  self = [super init];
+  if(self) {
+    self.items = [@[] mutableCopy];
+  }
+  return self;
+}
+
+@end
+
+@interface SHPocket : NSObject
+@property(nonatomic,strong) NSMutableSet * items;
+@end
+
+@implementation SHPocket
+
+-(instancetype)init; {
+  self = [super init];
+  if(self) {
+    self.items = [NSMutableSet set];
+  }
+  return self;
+}
+
+@end
+
+
+@interface SHPlayer : NSObject
+@property(nonatomic,strong) SHBackPack * backPack;
+@property(nonatomic,strong) SHPocket   * pocket;
+@end
+
+@implementation SHPlayer
+-(instancetype)init; {
+  self = [super init];
+  if(self) {
+    self.pocket   = SHPocket.new;
+    self.backPack = SHBackPack.new;
+  }
+  return self;
+}
+@end
 
 @interface SHAppDelegate ()
-@property(nonatomic,strong) NSMutableArray * mutableArray;
-@property(nonatomic,strong) NSMutableSet   * mutableSet;
+
+@property(nonatomic,strong) NSMutableArray * players;
+@property(nonatomic,strong) SHPlayer       * player;
+-(void)runObservers;
 @end
 
 @implementation SHAppDelegate
-
--(void)applicationDidFinishLaunching:(NSNotification *)aNotification;{
-  self.mutableArray     = [@[] mutableCopy];
-  self.mutableSet       = [NSMutableSet set];
+-(void)runObservers; {
+  self.players = [@[] mutableCopy];
+  self.player  = SHPlayer.new;
   
-  //  [self addObserver:self forKeyPath:@"mutableArray" options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld|NSKeyValueObservingOptionInitial|NSKeyValueObservingOptionPrior context:NULL];
   
-  NSString * identifier = [self SH_addObserverForKeyPaths:@[@"mutableArray",@"mutableSet"] block:^(id weakSelf, NSString *keyPath, NSDictionary *change) {
+  NSString * identifier = [self SH_addObserverForKeyPaths:@[@"players"] block:^(id weakSelf, NSString *keyPath, NSDictionary *change) {
     NSLog(@"identifier: %@ - %@",change, keyPath);
   }];
+  [self.players addObject:self.player];
   
-  NSString * identifier2 = [self SH_addObserverForKeyPaths:@[@"mutableArray",@"mutableSet"] block:^(id weakSelf, NSString *keyPath, NSDictionary *change) {
+  
+  [self SH_addObserverForKeyPaths:@[@"player.pocket.items",@"player.backPack.items"] block:^(id weakSelf, NSString *keyPath, NSDictionary *change) {
     NSLog(@"identifier2: %@ - %@",change,keyPath);
   }];
   
   double delayInSeconds = 2.0;
   dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
   dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-    [self SH_removeObserversForKeyPaths:@[@"mutableArray", @"mutableSet"] withIdentifiers:@[identifier]];
-    [[self mutableArrayValueForKey:@"mutableArray"] addObject:@"DAAAAAAAAMNG"];
-    [self SH_removeObserversWithIdentifiers:@[identifier2]];
-    //self.mutableArray = @[].mutableCopy;
+    
+    [[self mutableArrayValueForKeyPath:@"player.backPack.items"] addObject:@"potion"];
+    [[self mutableSetValueForKeyPath:@"player.pocket.items"] addObject:@"lighter"];
+    [[self mutableArrayValueForKey:@"players"] addObject:SHPlayer.new];
+    
+    double delayInSeconds = 2.0;
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+      [self SH_removeObserversForKeyPaths:@[@"players"] withIdentifiers:@[identifier]];
+      
+    });
+    
   });
+  
+  
+  
+}
 
+
+-(void)applicationDidFinishLaunching:(NSNotification *)aNotification;{
+  [self runObservers];
 }
 
 -(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context;  {

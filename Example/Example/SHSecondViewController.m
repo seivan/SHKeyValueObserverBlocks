@@ -8,70 +8,105 @@
 
 #import "SHSecondViewController.h"
 
-@interface SHSecondViewController ()
--(IBAction)tapProgUnwind:(id)sender;
-@property(nonatomic,strong) NSString * string;
-@property(nonatomic,strong) NSMutableString * mutableString;
+@interface SHBackPack : NSObject
+@property(nonatomic,strong) NSMutableArray * items;
+@end
 
-@property(nonatomic,strong) NSArray * array;
-@property(nonatomic,strong) NSMutableArray * mutableArray;
-
-@property(nonatomic,strong) NSDictionary * dictionary;
-@property(nonatomic,strong) NSMutableDictionary * mutableDictionary;
-
-@property(nonatomic,strong) NSSet * set;
-@property(nonatomic,strong) NSMutableSet * mutableSet;
-
-@property(nonatomic,strong) NSOrderedSet * orderedSet;
-@property(nonatomic,strong) NSMutableOrderedSet * mutableOrderedSet;
-
-@property(nonatomic,strong) NSNumber * number;
+@implementation SHBackPack
+-(instancetype)init; {
+  self = [super init];
+  if(self) {
+    self.items = [@[] mutableCopy];
+  }
+  return self;
+}
 
 @end
 
+@interface SHPocket : NSObject
+@property(nonatomic,strong) NSMutableSet * items;
+@end
+
+@implementation SHPocket
+
+-(instancetype)init; {
+  self = [super init];
+  if(self) {
+    self.items = [NSMutableSet set];
+  }
+  return self;
+}
+
+@end
+
+
+@interface SHPlayer : NSObject
+@property(nonatomic,strong) SHBackPack * backPack;
+@property(nonatomic,strong) SHPocket   * pocket;
+@end
+
+@implementation SHPlayer
+-(instancetype)init; {
+  self = [super init];
+  if(self) {
+    self.pocket   = SHPocket.new;
+    self.backPack = SHBackPack.new;
+  }
+  return self;
+}
+@end
+
+@interface SHSecondViewController ()
+-(IBAction)tapProgUnwind:(id)sender;
+@property(nonatomic,strong) NSMutableArray * players;
+@property(nonatomic,strong) SHPlayer       * player;
+-(void)runObservers;
+@end
+
 @implementation SHSecondViewController
-@synthesize name;
 
--(IBAction)tapProgUnwind:(id)sender; {
-  //[self performSegueWithIdentifier:@"unwinder" sender:self];
-  [self SH_performSegueWithIdentifier:@"unwinder" withUserInfo:@{@"date" : [NSDate date]}];
-}
-
-
--(void)viewDidLoad;{
-  [super viewDidLoad];
+-(void)runObservers; {
+  self.players = [@[] mutableCopy];
+  self.player  = SHPlayer.new;
   
-}
-
-//-(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context; {
-//  NSLog(@"CALLBACK: %@",change);
-//}
--(void)viewDidAppear:(BOOL)animated; {
-  [super viewDidAppear:animated];
-  self.mutableArray     = [@[] mutableCopy];
-  self.mutableSet       = [NSMutableSet set];
-
-  //  [self addObserver:self forKeyPath:@"mutableArray" options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld|NSKeyValueObservingOptionInitial|NSKeyValueObservingOptionPrior context:NULL];
-  
-  NSString * identifier = [self SH_addObserverForKeyPaths:@[@"mutableArray",@"mutableSet"] block:^(id weakSelf, NSString *keyPath, NSDictionary *change) {
+    
+  NSString * identifier = [self SH_addObserverForKeyPaths:@[@"players"] block:^(id weakSelf, NSString *keyPath, NSDictionary *change) {
     NSLog(@"identifier: %@ - %@",change, keyPath);
   }];
-
-  NSString * identifier2 = [self SH_addObserverForKeyPaths:@[@"mutableArray",@"mutableSet"] block:^(id weakSelf, NSString *keyPath, NSDictionary *change) {
+  [self.players addObject:self.player];
+  
+  
+  [self SH_addObserverForKeyPaths:@[@"player.pocket.items",@"player.backPack.items"] block:^(id weakSelf, NSString *keyPath, NSDictionary *change) {
     NSLog(@"identifier2: %@ - %@",change,keyPath);
   }];
-
+  
   double delayInSeconds = 2.0;
   dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
   dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-    [self SH_removeObserversForKeyPaths:@[@"mutableArray", @"mutableSet"] withIdentifiers:@[identifier]];
-    [[self mutableArrayValueForKey:@"mutableArray"] addObject:@"DAAAAAAAAMNG"];
-    [self SH_removeObserversWithIdentifiers:@[identifier2]];
-    //self.mutableArray = @[].mutableCopy;
+    
+    [[self mutableArrayValueForKeyPath:@"player.backPack.items"] addObject:@"potion"];
+    [[self mutableSetValueForKeyPath:@"player.pocket.items"] addObject:@"lighter"];
+    [[self mutableArrayValueForKey:@"players"] addObject:SHPlayer.new];
+    
+    double delayInSeconds = 2.0;
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+      [self SH_removeObserversForKeyPaths:@[@"players"] withIdentifiers:@[identifier]];
+      
+    });
+    
   });
+  
+  
+  
+}
 
 
 
+
+-(void)viewDidAppear:(BOOL)animated; {
+  [super viewDidAppear:animated];
+  [self runObservers];
   
 }
 -(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context;  {
@@ -81,14 +116,10 @@
     NSLog(@"Take care of here!");
     
 }
--(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender; {
-  UIViewController * destionationVc = segue.destinationViewController;
-  destionationVc.SH_userInfo = nil;
-  [self SH_handlesBlockForSegue:segue];
-  
-  
+
+-(IBAction)tapProgUnwind:(id)sender; {
+  //[self performSegueWithIdentifier:@"unwinder" sender:self];
+  [self SH_performSegueWithIdentifier:@"unwinder" withUserInfo:@{@"date" : [NSDate date]}];
 }
-
-
 
 @end
