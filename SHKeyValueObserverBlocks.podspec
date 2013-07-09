@@ -2,7 +2,7 @@ Pod::Spec.new do |s|
   name         = "SHKeyValueObserverBlocks"
   url          = "https://github.com/seivan/#{name}"
   git_url      = "#{url}.git"
-  version      = "0.2.1"
+  version      = "0.2.2"
   source_files = "#{name}/**/*.{h,m}"
   
   s.name         = name
