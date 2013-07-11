@@ -52,9 +52,12 @@ Usage
 With SHKeyValueObserverBlocks you can observe with all optins toggled in a single block:
 
 ```objective-c
-  NSString * identifier = [self SH_addObserverForKeyPaths:@[@"mutableArray",@"mutableSet"] block:^(id weakSelf, NSString *keyPath, NSDictionary *change) {
+  NSSet * keyPaths = @[@"players"].setRepresentation;
+  NSString * identifier = [self SH_addObserverForKeyPaths:keyPaths
+                                                    block:^(id weakSelf, NSString *keyPath, NSDictionary *change) {
     NSLog(@"identifier: %@ - %@",change, keyPath);
   }];
+
 
 
 ``` 
@@ -62,9 +65,10 @@ With SHKeyValueObserverBlocks you can observe with all optins toggled in a singl
 or if you want setup manual options
 
 ```objective-c
--(NSString *)SH_addObserverForKeyPaths:(id<NSFastEnumeration>)theKeyPaths
+-(NSString *)SH_addObserverForKeyPaths:(NSSet *)theKeyPaths
                            withOptions:(NSKeyValueObservingOptions)theOptions
                                  block:(SHKeyValueObserverBlock)theBlock;
+
 
 ```
 
@@ -80,20 +84,20 @@ or if you want setup manual options
 #### Get rid of all observers of certain keypaths (regardless of identifier)
 
 ```objective-c
--(void)SH_removeObserversForKeyPaths:(id<NSFastEnumeration>)theKeyPaths;
+-(void)SH_removeObserversForKeyPaths:(NSSet *)theKeyPaths;
 ```
 
 #### Get rid of all observers of certain identifiers (regardless of keypaths)
 
 ```objective-c
--(void)SH_removeObserversWithIdentifiers:(id<NSFastEnumeration>)theIdentifiers;
+-(void)SH_removeObserversWithIdentifiers:(NSSet *)theIdentifiers;
 ```
 
 #### Get rid of all observers of certain keypaths with certain idenitifers;
 
 ```objective-c
--(void)SH_removeObserversForKeyPaths:(id<NSFastEnumeration>)theKeyPaths
-                         withIdentifiers:(id<NSFastEnumeration>)theIdentifiers;
+-(void)SH_removeObserversForKeyPaths:(NSSet *)theKeyPaths
+                         withIdentifiers:(NSSet *)theIdentifiers;
 ```
 
 Configuration

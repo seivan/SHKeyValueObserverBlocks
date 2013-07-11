@@ -8,6 +8,20 @@
 
 #import "SHAppDelegate.h"
 #import "SHKeyValueObserverBlocks.h"
+
+@interface NSArray (Private)
+-(NSSet *)setRepresentation;
+@end
+
+@implementation NSArray (Private)
+-(NSSet *)setRepresentation; {
+  return [NSSet setWithArray:self];
+}
+
+
+@end
+
+
 @interface SHBackPack : NSObject
 @property(nonatomic,strong) NSMutableArray * items;
 @end
@@ -69,13 +83,15 @@
   self.player  = SHPlayer.new;
   
   
-  NSString * identifier = [self SH_addObserverForKeyPaths:@[@"players"] block:^(id weakSelf, NSString *keyPath, NSDictionary *change) {
+  NSString * identifier = [self SH_addObserverForKeyPaths:@[@"players"].setRepresentation
+                                                    block:^(id weakSelf, NSString *keyPath, NSDictionary *change) {
     NSLog(@"identifier: %@ - %@",change, keyPath);
   }];
   [self.players addObject:self.player];
   
   
-  [self SH_addObserverForKeyPaths:@[@"player.pocket.items",@"player.backPack.items"] block:^(id weakSelf, NSString *keyPath, NSDictionary *change) {
+  [self SH_addObserverForKeyPaths:@[@"player.pocket.items",@"player.backPack.items"].setRepresentation
+                            block:^(id weakSelf, NSString *keyPath, NSDictionary *change) {
     NSLog(@"identifier2: %@ - %@",change,keyPath);
   }];
   
@@ -90,7 +106,8 @@
     double delayInSeconds = 2.0;
     dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
     dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-      [self SH_removeObserversForKeyPaths:@[@"players"] withIdentifiers:@[identifier]];
+      [self SH_removeObserversForKeyPaths:@[@"players"].setRepresentation
+                          withIdentifiers:@[identifier].setRepresentation];
       
     });
     
