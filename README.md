@@ -37,11 +37,11 @@ Setup
 Put this either in specific controllers or your project prefix file
 
 ```objective-c
-#import 'NSObject+SHKeyValueObserverBlocks.h'
+#import "NSObject+SHKeyValueObserverBlocks.h"
 ```
 or
 ```objective-c
-#import 'SHKeyValueObserverBlocks.h'
+#import "SHKeyValueObserverBlocks.h"
 ```
 
 Usage
