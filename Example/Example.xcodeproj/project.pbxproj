@@ -19,6 +19,7 @@
 		22D3AEC51742D9B8000AB469 /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 22D3AEC31742D9B8000AB469 /* MainStoryboard.storyboard */; };
 		22D3AEC81742D9B8000AB469 /* SHViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 22D3AEC71742D9B8000AB469 /* SHViewController.m */; };
 		22D3AED31742E928000AB469 /* SHSecondViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 22D3AED21742E928000AB469 /* SHSecondViewController.m */; };
+		22DB6B28178EE95A00401D8F /* NSArray+Enumerable.m in Sources */ = {isa = PBXBuildFile; fileRef = 22DB6B27178EE95A00401D8F /* NSArray+Enumerable.m */; };
 		5B25AED73D9C4A729F20B25A /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A3799792E664CC2A299F48B /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -42,6 +43,8 @@
 		22D3AEC71742D9B8000AB469 /* SHViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SHViewController.m; sourceTree = "<group>"; };
 		22D3AED11742E928000AB469 /* SHSecondViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHSecondViewController.h; sourceTree = "<group>"; };
 		22D3AED21742E928000AB469 /* SHSecondViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHSecondViewController.m; sourceTree = "<group>"; };
+		22DB6B26178EE95A00401D8F /* NSArray+Enumerable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+Enumerable.h"; sourceTree = "<group>"; };
+		22DB6B27178EE95A00401D8F /* NSArray+Enumerable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+Enumerable.m"; sourceTree = "<group>"; };
 		2A3799792E664CC2A299F48B /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -96,6 +99,8 @@
 				22D3AEBB1742D9B8000AB469 /* SHAppDelegate.m */,
 				22D3AEC31742D9B8000AB469 /* MainStoryboard.storyboard */,
 				22D3AEC61742D9B8000AB469 /* SHViewController.h */,
+				22DB6B26178EE95A00401D8F /* NSArray+Enumerable.h */,
+				22DB6B27178EE95A00401D8F /* NSArray+Enumerable.m */,
 				22D3AEC71742D9B8000AB469 /* SHViewController.m */,
 				22D3AED11742E928000AB469 /* SHSecondViewController.h */,
 				22D3AED21742E928000AB469 /* SHSecondViewController.m */,
@@ -222,6 +227,7 @@
 				22D3AEBC1742D9B8000AB469 /* SHAppDelegate.m in Sources */,
 				22D3AEC81742D9B8000AB469 /* SHViewController.m in Sources */,
 				22D3AED31742E928000AB469 /* SHSecondViewController.m in Sources */,
+				22DB6B28178EE95A00401D8F /* NSArray+Enumerable.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
