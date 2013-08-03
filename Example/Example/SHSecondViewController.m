@@ -7,55 +7,9 @@
 //
 
 #import "SHSecondViewController.h"
-#import "NSArray+Enumerable.h"
+#import "NSArray+SHFastEnumerationProtocols.h"
+#import "SHModel.h"
 
-@interface SHBackPack : NSObject
-@property(nonatomic,strong) NSMutableArray * items;
-@end
-
-@implementation SHBackPack
--(instancetype)init; {
-  self = [super init];
-  if(self) {
-    self.items = [@[] mutableCopy];
-  }
-  return self;
-}
-
-@end
-
-@interface SHPocket : NSObject
-@property(nonatomic,strong) NSMutableSet * items;
-@end
-
-@implementation SHPocket
-
--(instancetype)init; {
-  self = [super init];
-  if(self) {
-    self.items = [NSMutableSet set];
-  }
-  return self;
-}
-
-@end
-
-
-@interface SHPlayer : NSObject
-@property(nonatomic,strong) SHBackPack * backPack;
-@property(nonatomic,strong) SHPocket   * pocket;
-@end
-
-@implementation SHPlayer
--(instancetype)init; {
-  self = [super init];
-  if(self) {
-    self.pocket   = SHPocket.new;
-    self.backPack = SHBackPack.new;
-  }
-  return self;
-}
-@end
 
 @interface SHSecondViewController ()
 -(IBAction)tapProgUnwind:(id)sender;
@@ -71,14 +25,14 @@
   self.players = [@[] mutableCopy];
   self.player  = SHPlayer.new;
   
-  NSSet * keyPaths = @[@"players"].setRepresentation;
+  NSArray * keyPaths = @[@"players"];
   NSString * identifier = [self SH_addObserverForKeyPaths:keyPaths
                                                     block:^(id weakSelf, NSString *keyPath, NSDictionary *change) {
     NSLog(@"identifier: %@ - %@",change, keyPath);
   }];
   [self.players addObject:self.player];
   
-  keyPaths = @[@"player.pocket.items",@"player.backPack.items"].setRepresentation;
+  keyPaths = @[@"player.pocketSet.items",@"player.backPackArray.items"];
   [self SH_addObserverForKeyPaths:keyPaths
                             block:^(id weakSelf, NSString *keyPath, NSDictionary *change) {
     NSLog(@"identifier2: %@ - %@",change,keyPath);
@@ -88,15 +42,15 @@
   dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
   dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
     
-    [[self mutableArrayValueForKeyPath:@"player.backPack.items"] addObject:@"potion"];
-    [[self mutableSetValueForKeyPath:@"player.pocket.items"] addObject:@"lighter"];
+    [[self mutableArrayValueForKeyPath:@"player.backPackArray.items"] addObject:@"potion"];
+    [[self mutableSetValueForKeyPath:@"player.pocketSet.items"] addObject:@"lighter"];
     [[self mutableArrayValueForKey:@"players"] addObject:SHPlayer.new];
     
     double delayInSeconds = 2.0;
     dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
     dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-      [self SH_removeObserversForKeyPaths:@[@"players"].setRepresentation
-                          withIdentifiers:@[identifier].setRepresentation
+      [self SH_removeObserversForKeyPaths:@[@"players"]
+                          withIdentifiers:@[identifier]
        ];
       
     });

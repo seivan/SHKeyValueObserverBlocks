@@ -24,10 +24,10 @@ typedef void (^SHKeyValueObserverBlock)(id weakSelf, NSString *keyPath, NSDictio
 #pragma mark - 
 #pragma mark Create Observers
 
--(NSString *)SH_addObserverForKeyPaths:(NSSet *)theKeyPaths
+-(NSString *)SH_addObserverForKeyPaths:(NSArray *)theKeyPaths
                                  block:(SHKeyValueObserverBlock)theBlock;
 
--(NSString *)SH_addObserverForKeyPaths:(NSSet *)theKeyPaths
+-(NSString *)SH_addObserverForKeyPaths:(NSArray *)theKeyPaths
                            withOptions:(NSKeyValueObservingOptions)theOptions
                                  block:(SHKeyValueObserverBlock)theBlock;
 
@@ -41,12 +41,12 @@ typedef void (^SHKeyValueObserverBlock)(id weakSelf, NSString *keyPath, NSDictio
 
 #pragma mark -
 #pragma mark Remove Observers
--(void)SH_removeObserversForKeyPaths:(NSSet *)theKeyPaths
-                         withIdentifiers:(NSSet *)theIdentifiers;
+-(void)SH_removeObserversForKeyPaths:(NSArray *)theKeyPaths
+                         withIdentifiers:(NSArray *)theIdentifiers;
 
--(void)SH_removeObserversWithIdentifiers:(NSSet *)theIdentifiers;
+-(void)SH_removeObserversWithIdentifiers:(NSArray *)theIdentifiers;
 
--(void)SH_removeObserversForKeyPaths:(NSSet *)theKeyPaths;
+-(void)SH_removeObserversForKeyPaths:(NSArray *)theKeyPaths;
 
 -(void)SH_removeAllObservers;
 
