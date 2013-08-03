@@ -1,5 +1,4 @@
 PODS:
-  - SHFastEnumerationProtocols (1.1.0)
   - SHKeyValueObserverBlocks (1.0.0)
   - SHObjectUserInfo (1.0.2)
   - SHSegueBlocks (1.1.1):
@@ -7,7 +6,6 @@ PODS:
   - SHTestCaseAdditions (1.0.0)
 
 DEPENDENCIES:
-  - SHFastEnumerationProtocols
   - SHKeyValueObserverBlocks (from `../`)
   - SHObjectUserInfo
   - SHSegueBlocks
@@ -20,7 +18,6 @@ EXTERNAL SOURCES:
     :git: https://github.com/seivan/SHTestCaseAdditions
 
 SPEC CHECKSUMS:
-  SHFastEnumerationProtocols: 1f273326e9b38c5998db98de1b30a54792978b6c
   SHKeyValueObserverBlocks: cc2c8cb2baba06521f4aa6aeb65995811b6f96ec
   SHObjectUserInfo: 579a22ce6f2705f8f121a0fa454f9cc115e96463
   SHSegueBlocks: a4d48e968fab08f3fae8485964b9f40daa42a1b3

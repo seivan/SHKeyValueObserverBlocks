@@ -8,11 +8,9 @@
 
 
 #import "SHKeyValueObserverBlocks.h"
-#import "SHFastEnumerationProtocols.h"
 #import "SHModel.h"
 #import <SenTestingKit/SenTestingKit.h>
 
-#import "SHTestCaseAdditions.h"
 
 @interface SHKeyValueObserverBlocksTests : SenTestCase
 @property(nonatomic,strong) SHPlayer * player;
