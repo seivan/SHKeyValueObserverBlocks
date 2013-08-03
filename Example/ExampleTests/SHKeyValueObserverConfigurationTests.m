@@ -48,12 +48,6 @@
 -(void)testAutoRemovingObserverNO; {
   [NSObject SH_setAutoRemovingObservers:NO];
 //  STAssertThrows([self setPlayer:nil], nil);
-
-  
-  
-  
-  
-  
 }
 
 @end
