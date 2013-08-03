@@ -3,24 +3,19 @@ PODS:
   - SHObjectUserInfo (1.0.2)
   - SHSegueBlocks (1.1.1):
     - SHObjectUserInfo (~> 1.0.0)
-  - SHTestCaseAdditions (1.0.0)
 
 DEPENDENCIES:
   - SHKeyValueObserverBlocks (from `../`)
   - SHObjectUserInfo
   - SHSegueBlocks
-  - SHTestCaseAdditions (from `https://github.com/seivan/SHTestCaseAdditions`)
 
 EXTERNAL SOURCES:
   SHKeyValueObserverBlocks:
     :path: ../
-  SHTestCaseAdditions:
-    :git: https://github.com/seivan/SHTestCaseAdditions
 
 SPEC CHECKSUMS:
   SHKeyValueObserverBlocks: cc2c8cb2baba06521f4aa6aeb65995811b6f96ec
   SHObjectUserInfo: 579a22ce6f2705f8f121a0fa454f9cc115e96463
   SHSegueBlocks: a4d48e968fab08f3fae8485964b9f40daa42a1b3
-  SHTestCaseAdditions: c19f82ab9f4963261ae1540eb1845146f24b2ff2
 
 COCOAPODS: 0.22.3

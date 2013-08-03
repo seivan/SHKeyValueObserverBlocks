@@ -5,6 +5,5 @@ link_with ['Example', 'ExampleTests']
 
 pod "SHObjectUserInfo"
 pod "SHSegueBlocks"
-pod "SHTestCaseAdditions", :git => "https://github.com/seivan/SHTestCaseAdditions"
 pod 'SHKeyValueObserverBlocks', :path => '../'
 
