@@ -23,8 +23,8 @@
 
 
 @implementation SHKeyValueObserverBlocksManager
-#pragma mark -
-#pragma mark Init & Dealloc
+
+#pragma mark - Init & Dealloc
 -(instancetype)init; {
   self = [super init];
   if (self) {
@@ -49,8 +49,8 @@
   
 }
 
-#pragma mark -
-#pragma mark Swizzling
+
+#pragma mark - Swizzling
 -(void)hijackDeallocForClass:(Class)theClass; {
   if ([self.setOfHijackedClasses containsObject:theClass] == NO) {
     
@@ -74,8 +74,7 @@
   
 }
 
-#pragma mark -
-#pragma mark Debugger
+#pragma mark - Debugger
 -(void)SH_memoryDebugger; {
   double delayInSeconds = 2.0;
   dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
@@ -114,21 +113,19 @@ typedef void (^SHKeyValueObserverBlockModifer)(NSMutableDictionary * keyPathMap,
 static char SHKeyValueObserverBlocksContext;
 @implementation NSObject (SHKeyValueObserverBlocks)
 
-#pragma mark -
-#pragma mark Configuration
 
+#pragma mark - Configuration
 +(BOOL)SH_isAutoRemovingObservers; {
   return SHKeyValueObserverBlocksManager.sharedManager.isAutoCleaning;
 }
 
-+(void)SH_isAutoRemovingObservers:(BOOL)shouldRemoveObservers;{
+
++(void)SH_setAutoRemovingObservers:(BOOL)shouldRemoveObservers;{
   SHKeyValueObserverBlocksManager.sharedManager.isAutoCleaning = shouldRemoveObservers;
 }
 
-#pragma mark -
-#pragma mark Create Observers
 
-
+#pragma mark - Add Observers
 
 -(NSString *)SH_addObserverForKeyPaths:(NSArray *)theKeyPaths
                                  block:(SHKeyValueObserverBlock)theBlock;  {
@@ -176,8 +173,8 @@ static char SHKeyValueObserverBlocksContext;
   
 }
 
-#pragma mark -
-#pragma mark Helpers
+
+#pragma mark - Helpers
 -(BOOL)SH_handleObserverForKeyPath:(NSString *)theKeyPath
                         withChange:(NSDictionary *)theChange
                            context:(void *)context; {
@@ -199,8 +196,8 @@ static char SHKeyValueObserverBlocksContext;
 
 
 
-#pragma mark -
-#pragma mark Remove Observers
+
+#pragma mark - Remove Observers
 
 
 -(void)SH_removeObserversForKeyPaths:(NSArray *)theKeyPaths
@@ -273,14 +270,14 @@ static char SHKeyValueObserverBlocksContext;
 }
 
 
-#pragma mark -
-#pragma mark Privates
 
-#pragma mark -
-#pragma mark Properties
+#pragma mark - Privates
 
-#pragma mark -
-#pragma mark Getters
+
+#pragma mark - Properties
+
+
+#pragma mark - Getters
 -(NSMutableDictionary *)mapObserverKeyPaths; {
   NSMutableDictionary * mapObserverKeyPaths = [self.mapObserverBlocks objectForKey:self.identifier];
   if(mapObserverKeyPaths == nil) {
@@ -290,8 +287,8 @@ static char SHKeyValueObserverBlocksContext;
   return mapObserverKeyPaths;
 }
 
-#pragma mark -
-#pragma mark Setters
+
+#pragma mark - Setters
 -(void)setMapObserverKeyPaths:(NSMutableDictionary *)mapObserverKeypaths; {
   if(mapObserverKeypaths.count > 0)
     [self.mapObserverBlocks setObject:mapObserverKeypaths forKey:self.identifier];
@@ -306,8 +303,7 @@ static char SHKeyValueObserverBlocksContext;
 
 
 
-#pragma mark -
-#pragma mark Helpers
+#pragma mark - Helpers
 -(void)setupKeyPathMapBlock:(SHKeyValueObserverBlockModifer)theBlock; {
   theBlock(self.mapObserverKeyPaths, ^(NSMutableDictionary * observerPaths, NSMutableArray * blocks){
     
@@ -338,8 +334,8 @@ static char kDisgustingSwizzledVariableKey;
   return SHKeyValueObserverBlocksManager.sharedManager.mapBlocks;
 }
 
-#pragma mark -
-#pragma mark Dealloc
+
+#pragma mark - Dealloc
 -(void)hijackedDealloc; {
   [self SH_removeAllObservers];
 }
@@ -352,16 +348,11 @@ static char kDisgustingSwizzledVariableKey;
 }
 
 
-static NSInteger lol = 0;
-#pragma mark -
-#pragma mark Standard Observer
+#pragma mark - Standard Observer
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wobjc-protocol-method-implementation"
 -(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context; {
-  lol +=1 ;
-  NSLog(@"%d", lol);
   [self SH_handleObserverForKeyPath:keyPath withChange:change context:context];
-  
 }
 #pragma clang diagnostic pop
 

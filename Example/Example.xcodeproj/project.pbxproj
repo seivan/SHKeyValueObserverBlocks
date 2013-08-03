@@ -10,6 +10,9 @@
 		1ECD4857E87F4761B4377F92 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A3799792E664CC2A299F48B /* libPods.a */; };
 		2275128517ABE0CB0029E3E0 /* SHModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2275128417ABE0CB0029E3E0 /* SHModel.m */; };
 		2275128617ABE0CB0029E3E0 /* SHModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2275128417ABE0CB0029E3E0 /* SHModel.m */; };
+		2275128817AC9D7C0029E3E0 /* SHKeyValueObserverHelpersTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2275128717AC9D7C0029E3E0 /* SHKeyValueObserverHelpersTests.m */; };
+		2275128A17ACA2520029E3E0 /* SHKeyValueObserverSuper.m in Sources */ = {isa = PBXBuildFile; fileRef = 2275128917ACA2520029E3E0 /* SHKeyValueObserverSuper.m */; };
+		2275128D17ACA7B90029E3E0 /* SHKeyValueObserverConfigurationTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2275128C17ACA7B90029E3E0 /* SHKeyValueObserverConfigurationTests.m */; };
 		228AF46C17ABDA5D009B31F3 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 228AF46B17ABDA5D009B31F3 /* SenTestingKit.framework */; };
 		228AF46D17ABDA5D009B31F3 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 22D3AEAB1742D9B8000AB469 /* UIKit.framework */; };
 		228AF46E17ABDA5D009B31F3 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 22D3AEAD1742D9B8000AB469 /* Foundation.framework */; };
@@ -34,6 +37,10 @@
 		007D8B59643445788A77A737 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
 		2275128317ABE0CB0029E3E0 /* SHModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHModel.h; sourceTree = "<group>"; };
 		2275128417ABE0CB0029E3E0 /* SHModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHModel.m; sourceTree = "<group>"; };
+		2275128717AC9D7C0029E3E0 /* SHKeyValueObserverHelpersTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHKeyValueObserverHelpersTests.m; sourceTree = "<group>"; };
+		2275128917ACA2520029E3E0 /* SHKeyValueObserverSuper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHKeyValueObserverSuper.m; sourceTree = "<group>"; };
+		2275128B17ACA2950029E3E0 /* SHKeyValueObserverSuper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHKeyValueObserverSuper.h; sourceTree = "<group>"; };
+		2275128C17ACA7B90029E3E0 /* SHKeyValueObserverConfigurationTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHKeyValueObserverConfigurationTests.m; sourceTree = "<group>"; };
 		228AF46A17ABDA5D009B31F3 /* ExampleTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ExampleTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
 		228AF46B17ABDA5D009B31F3 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
 		228AF47117ABDA5D009B31F3 /* ExampleTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "ExampleTests-Info.plist"; sourceTree = "<group>"; };
@@ -90,7 +97,11 @@
 		228AF46F17ABDA5D009B31F3 /* ExampleTests */ = {
 			isa = PBXGroup;
 			children = (
+				2275128B17ACA2950029E3E0 /* SHKeyValueObserverSuper.h */,
+				2275128917ACA2520029E3E0 /* SHKeyValueObserverSuper.m */,
+				2275128717AC9D7C0029E3E0 /* SHKeyValueObserverHelpersTests.m */,
 				228AF47617ABDA5D009B31F3 /* SHKeyValueObserverBlocksTests.m */,
+				2275128C17ACA7B90029E3E0 /* SHKeyValueObserverConfigurationTests.m */,
 				228AF47017ABDA5D009B31F3 /* Supporting Files */,
 			);
 			path = ExampleTests;
@@ -343,6 +354,9 @@
 			files = (
 				228AF47717ABDA5D009B31F3 /* SHKeyValueObserverBlocksTests.m in Sources */,
 				2275128617ABE0CB0029E3E0 /* SHModel.m in Sources */,
+				2275128817AC9D7C0029E3E0 /* SHKeyValueObserverHelpersTests.m in Sources */,
+				2275128A17ACA2520029E3E0 /* SHKeyValueObserverSuper.m in Sources */,
+				2275128D17ACA7B90029E3E0 /* SHKeyValueObserverConfigurationTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

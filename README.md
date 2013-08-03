@@ -56,7 +56,7 @@ Usage
 With SHKeyValueObserverBlocks you can observe with all optins toggled in a single block:
 
 ```objective-c
-  NSSet * keyPaths = @[@"players"].setRepresentation;
+  NSArray * keyPaths = @[@"players"].setRepresentation;
   NSString * identifier = [self SH_addObserverForKeyPaths:keyPaths
                                                     block:^(id weakSelf, NSString *keyPath, NSDictionary *change) {
     NSLog(@"identifier: %@ - %@",change, keyPath);
@@ -69,7 +69,7 @@ With SHKeyValueObserverBlocks you can observe with all optins toggled in a singl
 or if you want setup manual options
 
 ```objective-c
--(NSString *)SH_addObserverForKeyPaths:(NSSet *)theKeyPaths
+-(NSString *)SH_addObserverForKeyPaths:(NSArray *)theKeyPaths
                            withOptions:(NSKeyValueObservingOptions)theOptions
                                  block:(SHKeyValueObserverBlock)theBlock;
 
@@ -88,20 +88,20 @@ or if you want setup manual options
 #### Get rid of all observers of certain keypaths (regardless of identifier)
 
 ```objective-c
--(void)SH_removeObserversForKeyPaths:(NSSet *)theKeyPaths;
+-(void)SH_removeObserversForKeyPaths:(NSArray *)theKeyPaths;
 ```
 
 #### Get rid of all observers of certain identifiers (regardless of keypaths)
 
 ```objective-c
--(void)SH_removeObserversWithIdentifiers:(NSSet *)theIdentifiers;
+-(void)SH_removeObserversWithIdentifiers:(NSArray *)theIdentifiers;
 ```
 
 #### Get rid of all observers of certain keypaths with certain idenitifers;
 
 ```objective-c
--(void)SH_removeObserversForKeyPaths:(NSSet *)theKeyPaths
-                         withIdentifiers:(NSSet *)theIdentifiers;
+-(void)SH_removeObserversForKeyPaths:(NSArray *)theKeyPaths
+                         withIdentifiers:(NSArray *)theIdentifiers;
 ```
 
 Configuration
@@ -110,7 +110,7 @@ Configuration
 You can turn off the auto removal of observers and blocks by setting
 
 ```objective-c
-+(void)SH_isAutoRemovingObservers:(BOOL)shouldRemoveObservers;
++(void)SH_setAutoRemovingObservers:(BOOL)shouldRemoveObservers;
 
 ```
 
