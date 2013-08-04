@@ -4,7 +4,6 @@ SHKeyValueObserverBlocks
 [![Version](http://cocoapod-badges.herokuapp.com/v/SHKeyValueObserverBlocks/badge.png)](http://cocoadocs.org/docsets/SHKeyValueObserverBlocks)
 [![Platform](http://cocoapod-badges.herokuapp.com/p/SHKeyValueObserverBlocks/badge.png)](http://cocoadocs.org/docsets/SHKeyValueObserverBlocks)
 
-
 Overview
 --------
 
