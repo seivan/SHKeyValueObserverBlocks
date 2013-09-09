@@ -293,7 +293,7 @@ static char SHKeyValueObserverBlocksContext;
   if(mapObserverKeypaths.count > 0)
     [self.mapObserverBlocks setObject:mapObserverKeypaths forKey:self.identifier];
   else if(self.mapObserverKeyPaths.count > 0) {
-    [self SH_removeObserversForKeyPaths:[NSSet setWithArray:self.mapObserverKeyPaths.allKeys]];
+    [self SH_removeObserversForKeyPaths:self.mapObserverKeyPaths.allKeys];
   }
   //  else
   //    [self.mapObserverBlocks removeObjectForKey:self.identifier];

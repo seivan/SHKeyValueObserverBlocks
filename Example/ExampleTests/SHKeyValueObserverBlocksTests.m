@@ -9,6 +9,8 @@
 
 #import "SHKeyValueObserverSuper.h"
 
+#import "SHKeyValueObserverDeallocationVerifier.h"
+
 @interface SHKeyValueObserverBlocksTests : SHKeyValueObserverSuper
 
 @end
@@ -117,5 +119,19 @@
   STAssertFalse(self.firstBlockDidPassTestForPocketSet, nil);
   
 }
+
+- (void)testSH_deallocation
+{
+    STAssertTrue([NSObject SH_isAutoRemovingObservers], nil);
+
+    BOOL deallocated = NO;
+    @autoreleasepool {
+        SHKeyValueObserverDeallocationVerifier *verifier = [[SHKeyValueObserverDeallocationVerifier alloc] initWithDeallocationFlag:&deallocated];
+        [verifier SH_addObserverForKeyPaths:@[@"testProperty"]
+                                    block:^(id weakSelf, NSString *keyPath, NSDictionary *change) {}];
+    }
+    STAssertTrue(deallocated, nil);
+}
+
 
 @end
