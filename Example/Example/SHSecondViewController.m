@@ -81,4 +81,8 @@
   [self SH_performSegueWithIdentifier:@"unwinder" withUserInfo:@{@"date" : [NSDate date]}];
 }
 
+-(void)dealloc; {
+    
+}
+
 @end
