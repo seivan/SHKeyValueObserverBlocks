@@ -30,8 +30,8 @@
 		22D3AEC51742D9B8000AB469 /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 22D3AEC31742D9B8000AB469 /* MainStoryboard.storyboard */; };
 		22D3AEC81742D9B8000AB469 /* SHViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 22D3AEC71742D9B8000AB469 /* SHViewController.m */; };
 		22D3AED31742E928000AB469 /* SHSecondViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 22D3AED21742E928000AB469 /* SHSecondViewController.m */; };
+		22DA07C217DF2AD80077FA19 /* SHKeyValueObserverDeallocationTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 22DA07C117DF2AD80077FA19 /* SHKeyValueObserverDeallocationTests.m */; };
 		5B25AED73D9C4A729F20B25A /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A3799792E664CC2A299F48B /* libPods.a */; };
-		7D25B42917DDF3DD0097B06E /* SHKeyValueObserverDeallocationVerifier.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D25B42817DDF3DD0097B06E /* SHKeyValueObserverDeallocationVerifier.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -66,9 +66,8 @@
 		22D3AEC71742D9B8000AB469 /* SHViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SHViewController.m; sourceTree = "<group>"; };
 		22D3AED11742E928000AB469 /* SHSecondViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHSecondViewController.h; sourceTree = "<group>"; };
 		22D3AED21742E928000AB469 /* SHSecondViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHSecondViewController.m; sourceTree = "<group>"; };
+		22DA07C117DF2AD80077FA19 /* SHKeyValueObserverDeallocationTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHKeyValueObserverDeallocationTests.m; sourceTree = "<group>"; };
 		2A3799792E664CC2A299F48B /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		7D25B42717DDF3DD0097B06E /* SHKeyValueObserverDeallocationVerifier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHKeyValueObserverDeallocationVerifier.h; sourceTree = "<group>"; };
-		7D25B42817DDF3DD0097B06E /* SHKeyValueObserverDeallocationVerifier.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHKeyValueObserverDeallocationVerifier.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -105,8 +104,7 @@
 				2275128717AC9D7C0029E3E0 /* SHKeyValueObserverHelpersTests.m */,
 				228AF47617ABDA5D009B31F3 /* SHKeyValueObserverBlocksTests.m */,
 				2275128C17ACA7B90029E3E0 /* SHKeyValueObserverConfigurationTests.m */,
-				7D25B42717DDF3DD0097B06E /* SHKeyValueObserverDeallocationVerifier.h */,
-				7D25B42817DDF3DD0097B06E /* SHKeyValueObserverDeallocationVerifier.m */,
+				22DA07C117DF2AD80077FA19 /* SHKeyValueObserverDeallocationTests.m */,
 				228AF47017ABDA5D009B31F3 /* Supporting Files */,
 			);
 			path = ExampleTests;
@@ -360,9 +358,9 @@
 				228AF47717ABDA5D009B31F3 /* SHKeyValueObserverBlocksTests.m in Sources */,
 				2275128617ABE0CB0029E3E0 /* SHModel.m in Sources */,
 				2275128817AC9D7C0029E3E0 /* SHKeyValueObserverHelpersTests.m in Sources */,
-				7D25B42917DDF3DD0097B06E /* SHKeyValueObserverDeallocationVerifier.m in Sources */,
 				2275128A17ACA2520029E3E0 /* SHKeyValueObserverSuper.m in Sources */,
 				2275128D17ACA7B90029E3E0 /* SHKeyValueObserverConfigurationTests.m in Sources */,
+				22DA07C217DF2AD80077FA19 /* SHKeyValueObserverDeallocationTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
