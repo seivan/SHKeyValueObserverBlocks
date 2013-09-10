@@ -60,14 +60,18 @@
     Method hijackedDeallocMethod         = class_getInstanceMethod(theClass, hijackedDeallocSelector);
     
     IMP    hijackedDeallocImplementation = method_getImplementation(hijackedDeallocMethod);
-    
+    IMP    deallocImplementation         = method_getImplementation(deallocMethod);
+      
     //merge hijackedDeallocImplementation on the deallocSelector
     class_replaceMethod(theClass,
                         deallocSelector,
                         hijackedDeallocImplementation,
                         method_getTypeEncoding(deallocMethod)
                         );
-    
+      
+    NSString * newDeallocSelectorName = [NSString stringWithFormat:@"seivan"];
+    SEL sel = sel_registerName([newDeallocSelectorName UTF8String]);
+    class_addMethod(theClass, sel, deallocImplementation, "v@:@");    
     
     [self.setOfHijackedClasses addObject:theClass];
   }
@@ -338,6 +342,7 @@ static char kDisgustingSwizzledVariableKey;
 #pragma mark - Dealloc
 -(void)hijackedDealloc; {
   [self SH_removeAllObservers];
+  [self performSelector:@selector(seivan)];
 }
 
 -(void)hijackDealloc; {
