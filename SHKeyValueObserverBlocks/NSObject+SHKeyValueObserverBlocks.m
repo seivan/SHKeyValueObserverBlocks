@@ -26,68 +26,64 @@
 
 #pragma mark - Init & Dealloc
 -(instancetype)init; {
-  self = [super init];
-  if (self) {
-    self.mapBlocks            = [NSMapTable strongToStrongObjectsMapTable];
-    self.setOfHijackedClasses = [NSMutableSet set];
-    self.isAutoCleaning       = YES;
-//    [self SH_memoryDebugger];
-  }
-  
-  return self;
+    self = [super init];
+    if (self) {
+        self.mapBlocks            = [NSMapTable strongToStrongObjectsMapTable];
+        self.setOfHijackedClasses = [NSMutableSet set];
+        self.isAutoCleaning       = YES;
+        //    [self SH_memoryDebugger];
+    }
+    
+    return self;
 }
 
 +(instancetype)sharedManager; {
-  static SHKeyValueObserverBlocksManager *_sharedInstance;
-  static dispatch_once_t onceToken;
-  dispatch_once(&onceToken, ^{
-    _sharedInstance = [[SHKeyValueObserverBlocksManager alloc] init];
+    static SHKeyValueObserverBlocksManager *_sharedInstance;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        _sharedInstance = [[SHKeyValueObserverBlocksManager alloc] init];
+        
+    });
     
-  });
-  
-  return _sharedInstance;
-  
+    return _sharedInstance;
+    
 }
 
 
 #pragma mark - Swizzling
 -(void)hijackDeallocForClass:(Class)theClass; {
-  if ([self.setOfHijackedClasses containsObject:theClass] == NO) {
+    if ([self.setOfHijackedClasses containsObject:theClass] == NO) {
+        
+        SEL    deallocSelector               = NSSelectorFromString(@"dealloc");
+        SEL    hijackedDeallocSelector       = NSSelectorFromString(@"hijackedDealloc");
+        Method deallocMethod                 = class_getInstanceMethod(theClass, deallocSelector);
+        Method hijackedDeallocMethod         = class_getInstanceMethod(theClass, hijackedDeallocSelector);
+        
+        IMP    hijackedDeallocImplementation = method_getImplementation(hijackedDeallocMethod);
+        
+        //merge hijackedDeallocImplementation on the deallocSelector
+        class_replaceMethod(theClass,
+                            deallocSelector,
+                            hijackedDeallocImplementation,
+                            method_getTypeEncoding(deallocMethod)
+                            );
+        
+        
+        [self.setOfHijackedClasses addObject:theClass];
+    }
     
-    SEL    deallocSelector               = NSSelectorFromString(@"dealloc");
-    SEL    hijackedDeallocSelector       = NSSelectorFromString(@"hijackedDealloc");
-    Method deallocMethod                 = class_getInstanceMethod(theClass, deallocSelector);
-    Method hijackedDeallocMethod         = class_getInstanceMethod(theClass, hijackedDeallocSelector);
-    
-    IMP    hijackedDeallocImplementation = method_getImplementation(hijackedDeallocMethod);
-    IMP    deallocImplementation         = method_getImplementation(deallocMethod);
-      
-    //merge hijackedDeallocImplementation on the deallocSelector
-    class_replaceMethod(theClass,
-                        deallocSelector,
-                        hijackedDeallocImplementation,
-                        method_getTypeEncoding(deallocMethod)
-                        );
-      
-    NSString * newDeallocSelectorName = [NSString stringWithFormat:@"seivan"];
-    SEL sel = sel_registerName([newDeallocSelectorName UTF8String]);
-    class_addMethod(theClass, sel, deallocImplementation, "v@:@");    
-    
-    [self.setOfHijackedClasses addObject:theClass];
-  }
-  
 }
 
 #pragma mark - Debugger
 -(void)SH_memoryDebugger; {
-  double delayInSeconds = 2.0;
-  dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
-  dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-    
-    NSLog(@"MAP %@",self.mapBlocks);
-    NSLog(@"SET %@",self.setOfHijackedClasses);
-    [self SH_memoryDebugger];
-  });
+    double delayInSeconds = 2.0;
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+        
+        NSLog(@"MAP %@",self.mapBlocks);
+        NSLog(@"SET %@",self.setOfHijackedClasses);
+        [self SH_memoryDebugger];
+    });
 }
 
 
@@ -104,13 +100,13 @@ typedef void (^SHKeyValueObserverBlockModifer)(NSMutableDictionary * keyPathMap,
 
 
 @interface NSObject (SHKeyValueObserverBlocksPrivate)
--(void)setupKeyPathMapBlock:(SHKeyValueObserverBlockModifer)theBlock;
--(void)removeObserverForKeyPath:(NSString *)theKeyPath withContext:(NSString *)theContextString;
--(void)hijackedDealloc;
--(void)hijackDealloc;
-@property(nonatomic,readonly) NSString               * identifier;
-@property(nonatomic,readonly)  NSMapTable            * mapObserverBlocks;
-@property(nonatomic,readwrite) NSMutableDictionary   * mapObserverKeyPaths;
+-(void)SH_setupKeyPathMapBlock:(SHKeyValueObserverBlockModifer)theBlock;
+-(void)SH_removeObserverForKeyPath:(NSString *)theKeyPath withContext:(NSString *)theContextString;
+-(void)SH_hijackedDealloc;
+-(void)SH_hijackDealloc;
+@property(nonatomic,readonly) NSString               * SH_identifier;
+@property(nonatomic,readonly)  NSMapTable            * SH_mapObserverBlocks;
+@property(nonatomic,readwrite) NSMutableDictionary   * SH_mapObserverKeyPaths;
 
 @end
 
@@ -120,12 +116,12 @@ static char SHKeyValueObserverBlocksContext;
 
 #pragma mark - Configuration
 +(BOOL)SH_isAutoRemovingObservers; {
-  return SHKeyValueObserverBlocksManager.sharedManager.isAutoCleaning;
+    return SHKeyValueObserverBlocksManager.sharedManager.isAutoCleaning;
 }
 
 
 +(void)SH_setAutoRemovingObservers:(BOOL)shouldRemoveObservers;{
-  SHKeyValueObserverBlocksManager.sharedManager.isAutoCleaning = shouldRemoveObservers;
+    SHKeyValueObserverBlocksManager.sharedManager.isAutoCleaning = shouldRemoveObservers;
 }
 
 
@@ -133,48 +129,48 @@ static char SHKeyValueObserverBlocksContext;
 
 -(NSString *)SH_addObserverForKeyPaths:(NSArray *)theKeyPaths
                                  block:(SHKeyValueObserverBlock)theBlock;  {
-  
-  return [self SH_addObserverForKeyPaths:theKeyPaths
-                             withOptions:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld|NSKeyValueObservingOptionInitial|NSKeyValueObservingOptionPrior
-                                   block:theBlock];
-  
-  
+    
+    return [self SH_addObserverForKeyPaths:theKeyPaths
+                               withOptions:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld|NSKeyValueObservingOptionInitial|NSKeyValueObservingOptionPrior
+                                     block:theBlock];
+    
+    
 }
 
 
 -(NSString *)SH_addObserverForKeyPaths:(NSArray *)theKeyPaths
                            withOptions:(NSKeyValueObservingOptions)theOptions
                                  block:(SHKeyValueObserverBlock)theBlock; {
-  [self hijackDealloc];
-  
-  NSString * identifier = [[NSUUID UUID] UUIDString];
-  NSMutableArray * listOfBlocks = @[].mutableCopy;
-  [self setupKeyPathMapBlock:^void (NSMutableDictionary * keyPathMap, SHKeyValueObserverBlockModiferCompletion theCompletionBlock) {
+    [self SH_hijackDealloc];
     
-    for (NSString * keyPath in theKeyPaths) {
-      
-      NSMutableDictionary *  identifiers = keyPathMap[keyPath];
-      if(identifiers == nil) identifiers = @{}.mutableCopy;
-      
-      NSMutableArray *  blocks = identifiers[identifier];
-      if(blocks == nil) blocks = @[].mutableCopy;
-      
-      [blocks addObject:[theBlock copy]];
-      identifiers[identifier] = blocks;
-      
-      SHKeyValueObserverBlockAdder createObserverBlock = ^() {
-        [self addObserver:self forKeyPath:keyPath
-                  options:theOptions
-                  context:(__bridge void *)(identifier)];
-      };
-      [listOfBlocks addObject:[createObserverBlock copy]];
-      keyPathMap[keyPath] = identifiers;
-    }
-    theCompletionBlock(keyPathMap,listOfBlocks);
+    NSString * identifier = [[NSUUID UUID] UUIDString];
+    NSMutableArray * listOfBlocks = @[].mutableCopy;
+    [self setupKeyPathMapBlock:^void (NSMutableDictionary * keyPathMap, SHKeyValueObserverBlockModiferCompletion theCompletionBlock) {
+        
+        for (NSString * keyPath in theKeyPaths) {
+            
+            NSMutableDictionary *  identifiers = keyPathMap[keyPath];
+            if(identifiers == nil) identifiers = @{}.mutableCopy;
+            
+            NSMutableArray *  blocks = identifiers[identifier];
+            if(blocks == nil) blocks = @[].mutableCopy;
+            
+            [blocks addObject:[theBlock copy]];
+            identifiers[identifier] = blocks;
+            
+            SHKeyValueObserverBlockAdder createObserverBlock = ^() {
+                [self addObserver:self forKeyPath:keyPath
+                          options:theOptions
+                          context:(__bridge void *)(identifier)];
+            };
+            [listOfBlocks addObject:[createObserverBlock copy]];
+            keyPathMap[keyPath] = identifiers;
+        }
+        theCompletionBlock(keyPathMap,listOfBlocks);
+        
+    }];
+    return identifier;
     
-  }];
-  return identifier;
-  
 }
 
 
@@ -182,20 +178,20 @@ static char SHKeyValueObserverBlocksContext;
 -(BOOL)SH_handleObserverForKeyPath:(NSString *)theKeyPath
                         withChange:(NSDictionary *)theChange
                            context:(void *)context; {
-  
-  NSString            * contextUUID  = (__bridge NSString *)(context);
-  NSMutableDictionary * identifiers  = self.mapObserverKeyPaths[theKeyPath];
-  BOOL isHandlingObserver = NO;
-  if ([identifiers objectForKey:contextUUID]) {
-    isHandlingObserver = YES;
-    [identifiers.allValues enumerateObjectsUsingBlock:^(NSArray * blocks, NSUInteger _, BOOL * __) {
-      [blocks enumerateObjectsUsingBlock:^(SHKeyValueObserverBlock block, NSUInteger idx, BOOL *stop) {
-        if(block) block(self,theKeyPath,theChange);
-      }];
-    }];
-  }
-  return isHandlingObserver;
-  
+    
+    NSString            * contextUUID  = (__bridge NSString *)(context);
+    NSMutableDictionary * identifiers  = self.SH_mapObserverKeyPaths[theKeyPath];
+    BOOL isHandlingObserver = NO;
+    if ([identifiers objectForKey:contextUUID]) {
+        isHandlingObserver = YES;
+        [identifiers.allValues enumerateObjectsUsingBlock:^(NSArray * blocks, NSUInteger _, BOOL * __) {
+            [blocks enumerateObjectsUsingBlock:^(SHKeyValueObserverBlock block, NSUInteger idx, BOOL *stop) {
+                if(block) block(self,theKeyPath,theChange);
+            }];
+        }];
+    }
+    return isHandlingObserver;
+    
 }
 
 
@@ -206,71 +202,71 @@ static char SHKeyValueObserverBlocksContext;
 
 -(void)SH_removeObserversForKeyPaths:(NSArray *)theKeyPaths
                      withIdentifiers:(NSArray *)theIdentifiers;  {
-  
-  [self setupKeyPathMapBlock:^void(NSMutableDictionary *keyPathMap, SHKeyValueObserverBlockModiferCompletion theCompletionBlock) {
-    NSMutableArray * keyPathsToRemove = @[].mutableCopy;
-    for (NSString * keyPath in theKeyPaths) {
-      NSMutableDictionary * identifiers =  keyPathMap[keyPath];
-      
-      for (NSString * identifier in theIdentifiers) {
-        NSMutableArray * blocks = identifiers[identifier];
-        for (SHKeyValueObserverBlock block in blocks) {
-          [self removeObserverForKeyPath:keyPath withContext:identifier];
+    
+    [self setupKeyPathMapBlock:^void(NSMutableDictionary *keyPathMap, SHKeyValueObserverBlockModiferCompletion theCompletionBlock) {
+        NSMutableArray * keyPathsToRemove = @[].mutableCopy;
+        for (NSString * keyPath in theKeyPaths) {
+            NSMutableDictionary * identifiers =  keyPathMap[keyPath];
+            
+            for (NSString * identifier in theIdentifiers) {
+                NSMutableArray * blocks = identifiers[identifier];
+                for (SHKeyValueObserverBlock block in blocks) {
+                    [self removeObserverForKeyPath:keyPath withContext:identifier];
+                }
+                [identifiers removeObjectForKey:identifier];
+            }
+            if(identifiers.count < 1)
+                [keyPathsToRemove addObject:keyPath];
         }
-        [identifiers removeObjectForKey:identifier];
-      }
-      if(identifiers.count < 1)
-        [keyPathsToRemove addObject:keyPath];
-    }
-    [keyPathMap removeObjectsForKeys:keyPathsToRemove];
-    theCompletionBlock(keyPathMap,nil);
-  }];
-  
+        [keyPathMap removeObjectsForKeys:keyPathsToRemove];
+        theCompletionBlock(keyPathMap,nil);
+    }];
+    
 }
 
 
 -(void)SH_removeObserversWithIdentifiers:(NSArray *)theIdentifiers; {
-  
-  __weak typeof(self) weakSelf = self;
-  [self setupKeyPathMapBlock:^void(NSMutableDictionary * keyPathMap, SHKeyValueObserverBlockModiferCompletion theCompletionBlock) {
     
-    NSMutableArray * keyPathsToRemove = @[].mutableCopy;
-    for (NSString * identifierToRemove in theIdentifiers) {
-      for (NSString * keyPath in keyPathMap) {
-        NSMutableDictionary * identifiers = keyPathMap[keyPath];
-        [identifiers removeObjectForKey:identifierToRemove];
-        [weakSelf removeObserverForKeyPath:keyPath withContext:identifierToRemove];
-        if(identifiers.count < 1)
-          [keyPathsToRemove addObject:keyPath];
-      }
-    }
+    __weak typeof(self) weakSelf = self;
+    [self setupKeyPathMapBlock:^void(NSMutableDictionary * keyPathMap, SHKeyValueObserverBlockModiferCompletion theCompletionBlock) {
+        
+        NSMutableArray * keyPathsToRemove = @[].mutableCopy;
+        for (NSString * identifierToRemove in theIdentifiers) {
+            for (NSString * keyPath in keyPathMap) {
+                NSMutableDictionary * identifiers = keyPathMap[keyPath];
+                [identifiers removeObjectForKey:identifierToRemove];
+                [weakSelf removeObserverForKeyPath:keyPath withContext:identifierToRemove];
+                if(identifiers.count < 1)
+                    [keyPathsToRemove addObject:keyPath];
+            }
+        }
+        
+        [keyPathMap removeObjectsForKeys:keyPathsToRemove];
+        theCompletionBlock(keyPathMap,nil);
+        
+    }];
     
-    [keyPathMap removeObjectsForKeys:keyPathsToRemove];
-    theCompletionBlock(keyPathMap,nil);
     
-  }];
-  
-  
-  
+    
 }
 
 -(void)SH_removeObserversForKeyPaths:(NSArray *)theKeyPaths; {
-  [self setupKeyPathMapBlock:^void(NSMutableDictionary * keyPathMap, SHKeyValueObserverBlockModiferCompletion theCompletionBlock) {
-    for (NSString * keyPath in theKeyPaths) {
-      NSMutableDictionary * identifiers =  keyPathMap[keyPath];
-      
-      for (NSString * identifier in identifiers.allKeys)
-        [self removeObserverForKeyPath:keyPath withContext:identifier];
-      
-      [keyPathMap removeObjectForKey:keyPath];
-      
-    }
-    theCompletionBlock(keyPathMap,nil);
-  }];
+    [self setupKeyPathMapBlock:^void(NSMutableDictionary * keyPathMap, SHKeyValueObserverBlockModiferCompletion theCompletionBlock) {
+        for (NSString * keyPath in theKeyPaths) {
+            NSMutableDictionary * identifiers =  keyPathMap[keyPath];
+            
+            for (NSString * identifier in identifiers.allKeys)
+                [self removeObserverForKeyPath:keyPath withContext:identifier];
+            
+            [keyPathMap removeObjectForKey:keyPath];
+            
+        }
+        theCompletionBlock(keyPathMap,nil);
+    }];
 }
 
 -(void)SH_removeAllObservers; {
-  self.mapObserverKeyPaths = nil;
+    self.SH_mapObserverKeyPaths = nil;
 }
 
 
@@ -282,74 +278,73 @@ static char SHKeyValueObserverBlocksContext;
 
 
 #pragma mark - Getters
--(NSMutableDictionary *)mapObserverKeyPaths; {
-  NSMutableDictionary * mapObserverKeyPaths = [self.mapObserverBlocks objectForKey:self.identifier];
-  if(mapObserverKeyPaths == nil) {
-    mapObserverKeyPaths = @{}.mutableCopy;
-  }
-  
-  return mapObserverKeyPaths;
+-(NSMutableDictionary *)SH_mapObserverKeyPaths; {
+    NSMutableDictionary * mapObserverKeyPaths = [self.SH_mapObserverBlocks objectForKey:self.identifier];
+    if(mapObserverKeyPaths == nil) {
+        mapObserverKeyPaths = @{}.mutableCopy;
+    }
+    
+    return mapObserverKeyPaths;
 }
 
 
 #pragma mark - Setters
--(void)setMapObserverKeyPaths:(NSMutableDictionary *)mapObserverKeypaths; {
-  if(mapObserverKeypaths.count > 0)
-    [self.mapObserverBlocks setObject:mapObserverKeypaths forKey:self.identifier];
-  else if(self.mapObserverKeyPaths.count > 0) {
-    [self SH_removeObserversForKeyPaths:self.mapObserverKeyPaths.allKeys];
-  }
-  //  else
-  //    [self.mapObserverBlocks removeObjectForKey:self.identifier];
-  
-  
+-(void)SH_setMapObserverKeyPaths:(NSMutableDictionary *)mapObserverKeypaths; {
+    if(mapObserverKeypaths.count > 0)
+        [self.SH_mapObserverBlocks setObject:mapObserverKeypaths forKey:self.SH_identifier];
+    else if(self.SH_mapObserverKeyPaths.count > 0) {
+        [self SH_removeObserversForKeyPaths:self.SH_mapObserverKeyPaths.allKeys];
+    }
+    //  else
+    //    [self.mapObserverBlocks removeObjectForKey:self.identifier];
+    
+    
 }
 
 
 
 #pragma mark - Helpers
 -(void)setupKeyPathMapBlock:(SHKeyValueObserverBlockModifer)theBlock; {
-  theBlock(self.mapObserverKeyPaths, ^(NSMutableDictionary * observerPaths, NSMutableArray * blocks){
+    theBlock(self.SH_mapObserverKeyPaths, ^(NSMutableDictionary * observerPaths, NSMutableArray * blocks){
+        
+        self.SH_mapObserverKeyPaths = observerPaths;
+        
+        for (SHKeyValueObserverBlockAdder block in blocks) {
+            block();
+        }
+    });
     
-    self.mapObserverKeyPaths = observerPaths;
     
-    for (SHKeyValueObserverBlockAdder block in blocks) {
-      block();
-    }
-  });
-  
-  
 }
 -(void)removeObserverForKeyPath:(NSString *)theKeyPath withContext:(NSString *)theContextString; {
-  [self removeObserver:self forKeyPath:theKeyPath context:(__bridge void *)(theContextString)];
+    [self removeObserver:self forKeyPath:theKeyPath context:(__bridge void *)(theContextString)];
 }
 
 static char kDisgustingSwizzledVariableKey;
 -(NSString *)identifier; {
-  NSString * _identifier = objc_getAssociatedObject(self, kDisgustingSwizzledVariableKey);
-  if(_identifier == nil) {
-    _identifier = [[NSUUID UUID] UUIDString];
-    objc_setAssociatedObject(self, kDisgustingSwizzledVariableKey, _identifier, OBJC_ASSOCIATION_ASSIGN);
-  }
-  return _identifier;
+    NSString * _identifier = objc_getAssociatedObject(self, kDisgustingSwizzledVariableKey);
+    if(_identifier == nil) {
+        _identifier = [[NSUUID UUID] UUIDString];
+        objc_setAssociatedObject(self, kDisgustingSwizzledVariableKey, _identifier, OBJC_ASSOCIATION_ASSIGN);
+    }
+    return _identifier;
 }
 
--(NSMapTable *)mapObserverBlocks; {
-  return SHKeyValueObserverBlocksManager.sharedManager.mapBlocks;
+-(NSMapTable *)SH_mapObserverBlocks; {
+    return SHKeyValueObserverBlocksManager.sharedManager.mapBlocks;
 }
 
 
 #pragma mark - Dealloc
--(void)hijackedDealloc; {
-  [self SH_removeAllObservers];
-  [self performSelector:@selector(seivan)];
+-(void)SH_hijackedDealloc; {
+    [self SH_removeAllObservers];
 }
 
--(void)hijackDealloc; {
-  if([NSObject SH_isAutoRemovingObservers]) {
-    Class class = [self class];
-    [SHKeyValueObserverBlocksManager.sharedManager hijackDeallocForClass:class];
-  }
+-(void)SH_hijackDealloc; {
+    if([NSObject SH_isAutoRemovingObservers]) {
+        Class class = [self class];
+        [SHKeyValueObserverBlocksManager.sharedManager hijackDeallocForClass:class];
+    }
 }
 
 
@@ -357,7 +352,7 @@ static char kDisgustingSwizzledVariableKey;
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wobjc-protocol-method-implementation"
 -(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context; {
-  [self SH_handleObserverForKeyPath:keyPath withChange:change context:context];
+    [self SH_handleObserverForKeyPath:keyPath withChange:change context:context];
 }
 #pragma clang diagnostic pop
 

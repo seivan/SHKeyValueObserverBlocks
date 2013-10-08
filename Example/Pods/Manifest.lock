@@ -1,8 +1,8 @@
 PODS:
-  - SHKeyValueObserverBlocks (1.0.0)
-  - SHObjectUserInfo (1.0.2)
-  - SHSegueBlocks (1.1.1):
-    - SHObjectUserInfo (~> 1.0.0)
+  - SHKeyValueObserverBlocks (1.1.0)
+  - SHObjectUserInfo (1.1.0)
+  - SHSegueBlocks (1.2.0):
+    - SHObjectUserInfo (~> 1.1.0)
 
 DEPENDENCIES:
   - SHKeyValueObserverBlocks (from `../`)
@@ -14,8 +14,8 @@ EXTERNAL SOURCES:
     :path: ../
 
 SPEC CHECKSUMS:
-  SHKeyValueObserverBlocks: cc2c8cb2baba06521f4aa6aeb65995811b6f96ec
-  SHObjectUserInfo: 579a22ce6f2705f8f121a0fa454f9cc115e96463
-  SHSegueBlocks: a4d48e968fab08f3fae8485964b9f40daa42a1b3
+  SHKeyValueObserverBlocks: 27efd0381eb1e96ae9e41a30e50b6200323b8d5d
+  SHObjectUserInfo: 3dfe4af11a45c985088f613813705b8ebd3cc718
+  SHSegueBlocks: 9acc4d9d5f588933693b594cb07dfce4e2c42d2a
 
-COCOAPODS: 0.22.3
+COCOAPODS: 0.25.0
