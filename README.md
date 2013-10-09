@@ -1,160 +1,93 @@
-SHKeyValueObserverBlocks
-==========
+#SHKeyValueObserverBlocks
+
 [![Build Status](https://travis-ci.org/seivan/SHKeyValueObserverBlocks.png?branch=master)](https://travis-ci.org/seivan/SHKeyValueObserverBlocks)
 [![Version](http://cocoapod-badges.herokuapp.com/v/SHKeyValueObserverBlocks/badge.png)](http://cocoadocs.org/docsets/SHKeyValueObserverBlocks)
 [![Platform](http://cocoapod-badges.herokuapp.com/p/SHKeyValueObserverBlocks/badge.png)](http://cocoadocs.org/docsets/SHKeyValueObserverBlocks)
 
 > This pod is used by [`SHFoundationAdditions`](https://github.com/seivan/SHFoundationAdditions) as part of many components covering to plug the holes missing from Foundation, UIKit, CoreLocation, GameKit, MapKit and other aspects of an iOS application's architecture.
 
-Overview
---------
+##Overview
 
-#### [Check the creating section](https://github.com/seivan/SHKeyValueObserverBlocks#creating)
+Key Value Observing with blocks on top of NSObject.
+Blocks are hold with a weak reference so you don't have to cleanup when your object is gone.
 
-You can setup observers with all options on multiple keypaths
+ * No need to clean up after - Blocks and observers are self maintained.
+ * Weak referenced blocks.
+ * Prefixed selectors.
+ * Works with existing codebase that uses old fashioned observing delegate calls. 
+ * Configurable to remove the swizzled auto cleanup
+ * Remove blocks by keypaths or identifiers
+ * Remove blocks by keypaths and identifiers
+ * Minimum clutter on top of the public interface. 
 
-You can setup observers with specified options on multiple keypaths 
-
-#### [Check the removing section](https://github.com/seivan/SHKeyValueObserverBlocks#removing)
-
-You can remove based on a list of keypaths or identifiers.
-
-You can remove based on both a list of keypaths and and identifiers
-
-#### [Check the configuration section](https://github.com/seivan/SHKeyValueObserverBlocks#configuration)
-
-Prefixed self cleaning (can be deactivated) block based observers on NSObject. 
-
-
-
-Installation
-------------
+##Installation
 
 ```ruby
 pod 'SHKeyValueObserverBlocks'
 ```
 
-***
 
-Setup
------
+##Setup
 
-Put this either in specific controllers or your project prefix file
-
+Put this either in specific files or your project prefix file
 ```objective-c
 #import "NSObject+SHKeyValueObserverBlocks.h"
+
 ```
 or
 ```objective-c
 #import "SHKeyValueObserverBlocks.h"
 ```
 
-Usage
------
-
-### Creating
-
-With SHKeyValueObserverBlocks you can observe with all optins toggled in a single block:
+##API
 
 ```objective-c
-  NSArray * keyPaths = @[@"players"].setRepresentation;
-  NSString * identifier = [self SH_addObserverForKeyPaths:keyPaths
-                                                    block:^(id weakSelf, NSString *keyPath, NSDictionary *change) {
-    NSLog(@"identifier: %@ - %@",change, keyPath);
-  }];
+#pragma mark - Block Defs
+
+typedef void (^SHKeyValueObserverBlock)(id weakSelf, NSString *keyPath, NSDictionary *change);
+
+@interface NSObject (SHKeyValueObserverBlocks)
+
+#pragma mark - Configuration
+
++(BOOL)SH_isAutoRemovingObservers;
++(void)SH_setAutoRemovingObservers:(BOOL)shouldRemoveObservers;
 
 
 
-``` 
 
-or if you want setup manual options
+#pragma mark - Add Observers
 
-```objective-c
+-(NSString *)SH_addObserverForKeyPaths:(NSArray *)theKeyPaths
+                                 block:(SHKeyValueObserverBlock)theBlock;
+
 -(NSString *)SH_addObserverForKeyPaths:(NSArray *)theKeyPaths
                            withOptions:(NSKeyValueObservingOptions)theOptions
                                  block:(SHKeyValueObserverBlock)theBlock;
 
 
-```
 
-### Removing
-
-
-#### If you want to deal with the cleanup manually (I can understand if you want to avoid the Swizzle)
-
-```objective-c
--(void)SH_removeAllObservers;
-```
-
-#### Get rid of all observers of certain keypaths (regardless of identifier)
-
-```objective-c
--(void)SH_removeObserversForKeyPaths:(NSArray *)theKeyPaths;
-```
-
-#### Get rid of all observers of certain identifiers (regardless of keypaths)
-
-```objective-c
--(void)SH_removeObserversWithIdentifiers:(NSArray *)theIdentifiers;
-```
-
-#### Get rid of all observers of certain keypaths with certain idenitifers;
-
-```objective-c
--(void)SH_removeObserversForKeyPaths:(NSArray *)theKeyPaths
-                         withIdentifiers:(NSArray *)theIdentifiers;
-```
-
-Configuration
------- 
-
-You can turn off the auto removal of observers and blocks by setting
-
-```objective-c
-+(void)SH_setAutoRemovingObservers:(BOOL)shouldRemoveObservers;
-
-```
-
-Existing Codebase 
------------------
-
-If you already have  
-
-```objective-c
--(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context;
-``` 
-
-implemented and used within your code base you can use the block handler
-
-```objective-c
+#pragma mark - Helpers
 -(BOOL)SH_handleObserverForKeyPath:(NSString *)theKeyPath
                         withChange:(NSDictionary *)theChange
                            context:(void *)context;
-```
 
-Like this 
 
-```objective-c
--(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context;  {
-  if([self SH_handleObserverForKeyPath:keyPath withChange:change context:context])
-    NSLog(@"TAKEN CARE OF BY BLOCK");
-  else
-    NSLog(@"Take care of here!");
-    
-}
-```
-That will check if there is block **and** if there is - execute it. 
 
-Replacing
----------
+#pragma mark - Remove Observers
+-(void)SH_removeObserversForKeyPaths:(NSArray *)theKeyPaths
+                         withIdentifiers:(NSArray *)theIdentifiers;
 
-```objective-c
-[self addObserver:self forKeyPath:@"mutableArray" options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld|NSKeyValueObservingOptionInitial|NSKeyValueObservingOptionPrior context:NULL]
+-(void)SH_removeObserversWithIdentifiers:(NSArray *)theIdentifiers;
+
+-(void)SH_removeObserversForKeyPaths:(NSArray *)theKeyPaths;
+
+-(void)SH_removeAllObservers;
+
 ```
 
 
-Contact
--------
+##Contact
 
 If you end up using SHKeyValueObserverBlocks in a project, I'd love to hear about it.
 
