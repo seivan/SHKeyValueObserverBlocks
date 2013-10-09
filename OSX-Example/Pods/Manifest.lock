@@ -1,5 +1,5 @@
 PODS:
-  - SHKeyValueObserverBlocks (0.2.1)
+  - SHKeyValueObserverBlocks (1.1.0)
 
 DEPENDENCIES:
   - SHKeyValueObserverBlocks (from `../`)
@@ -9,6 +9,6 @@ EXTERNAL SOURCES:
     :path: ../
 
 SPEC CHECKSUMS:
-  SHKeyValueObserverBlocks: be3ef40f7048915680d71150e594bb887558b61d
+  SHKeyValueObserverBlocks: 27efd0381eb1e96ae9e41a30e50b6200323b8d5d
 
-COCOAPODS: 0.21.0
+COCOAPODS: 0.25.0
