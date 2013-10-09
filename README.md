@@ -8,17 +8,17 @@
 
 ##Overview
 
-                    Key Value Observing with blocks on top of NSObject.
-                    Blocks are hold with a weak reference so you don't have to cleanup when your object is gone.
-  
-                    * No need to clean up after - Blocks and observers are self maintained.
-                    * Weak referenced blocks.
-                    * Prefixed selectors.
-                    * Works with existing codebase that uses old fashioned observing delegate calls. 
-                    * Configurable to remove the swizzled auto cleanup
-                    * Remove blocks by keypaths or identifiers
-                    * Remove blocks by keypaths and identifiers
-                    * Minimum clutter on top of the public interface. 
+Key Value Observing with blocks on top of NSObject.
+Blocks are hold with a weak reference so you don't have to cleanup when your object is gone.
+
+ * No need to clean up after - Blocks and observers are self maintained.
+ * Weak referenced blocks.
+ * Prefixed selectors.
+ * Works with existing codebase that uses old fashioned observing delegate calls. 
+ * Configurable to remove the swizzled auto cleanup
+ * Remove blocks by keypaths or identifiers
+ * Remove blocks by keypaths and identifiers
+ * Minimum clutter on top of the public interface. 
 
 ##Installation
 
