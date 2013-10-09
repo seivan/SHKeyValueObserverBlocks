@@ -1,15 +1,12 @@
 //
-//  UIViewController+SHSegueBlock.h
 //  Example
 //
 //  Created by Seivan Heidari on 5/16/13.
 //  Copyright (c) 2013 Seivan Heidari. All rights reserved.
 //
 
-#pragma mark -
-#pragma mark Block Defs
 
-
+#pragma mark - Block Defs
 
 typedef void (^SHKeyValueObserverBlock)(id weakSelf, NSString *keyPath, NSDictionary *change);
 
@@ -41,7 +38,7 @@ typedef void (^SHKeyValueObserverBlock)(id weakSelf, NSString *keyPath, NSDictio
 
 
 
-#pragma mark -Remove Observers
+#pragma mark - Remove Observers
 -(void)SH_removeObserversForKeyPaths:(NSArray *)theKeyPaths
                          withIdentifiers:(NSArray *)theIdentifiers;
 
