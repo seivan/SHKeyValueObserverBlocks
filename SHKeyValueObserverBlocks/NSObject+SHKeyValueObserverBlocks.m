@@ -9,7 +9,7 @@
 
 
 @interface SHKeyValueObserverBlocksManager : NSObject
-@property(nonatomic,assign) BOOL         * isAutoCleaning;
+@property(nonatomic,assign) BOOL           isAutoCleaning;
 @property(nonatomic,strong) NSMapTable   * mapBlocks;
 @property(nonatomic,strong) NSMutableSet * setOfHijackedClasses;
 
@@ -108,7 +108,7 @@ typedef void (^SHKeyValueObserverBlockModifer)(NSMutableDictionary * keyPathMap,
 
 @end
 
-static char SHKeyValueObserverBlocksContext;
+//static char SHKeyValueObserverBlocksContext;
 @implementation NSObject (SHKeyValueObserverBlocks)
 
 
@@ -318,7 +318,7 @@ static char SHKeyValueObserverBlocksContext;
     [self removeObserver:self forKeyPath:theKeyPath context:(__bridge void *)(theContextString)];
 }
 
-static char kDisgustingSwizzledVariableKey;
+static char *kDisgustingSwizzledVariableKey;
 -(NSString *)SH_identifier; {
     NSString * _identifier = objc_getAssociatedObject(self, kDisgustingSwizzledVariableKey);
     if(_identifier == nil) {
