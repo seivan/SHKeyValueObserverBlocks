@@ -11,54 +11,34 @@
 
 
 @interface SHKeyValueObserverTestManager : NSObject
-+(instancetype)sharedManager;
 @property(nonatomic,assign) BOOL isSuperDealloced;
 @property(nonatomic,assign) BOOL isSubDealloced;
 @end
 
 @implementation SHKeyValueObserverTestManager
--(instancetype)init; {
-  self = [super init];
-  if(self) {
-    self.isSubDealloced   = NO;
-    self.isSuperDealloced = NO;
-  }
-  return self;
-}
-
-+(instancetype)sharedManager; {
-  static SHKeyValueObserverTestManager * manager = nil;
-  static dispatch_once_t onceToken;
-  dispatch_once(&onceToken, ^{
-    manager =  [[SHKeyValueObserverTestManager alloc] init];
-  });
-  return manager;
-}
-
-
 @end
 
 @interface SHKeyValueObserverDeallocationSuperVerifier : NSObject
-
+@property(nonatomic, strong) SHKeyValueObserverTestManager *testManager;
+@property(nonatomic,strong) NSString *testProperty;
 @end
 
 @implementation SHKeyValueObserverDeallocationSuperVerifier
 
 
 -(void)dealloc;{
-  [SHKeyValueObserverTestManager sharedManager].isSuperDealloced = YES;
+  self.testManager.isSuperDealloced = YES;
 }
 @end
 
 @interface SHKeyValueObserverDeallocationSubVerifier : SHKeyValueObserverDeallocationSuperVerifier
-@property(nonatomic,strong) NSString *testProperty;
 @end
 
 @implementation SHKeyValueObserverDeallocationSubVerifier
 
 
 -(void)dealloc; {
-  [SHKeyValueObserverTestManager sharedManager].isSubDealloced = YES;
+  self.testManager.isSubDealloced = YES;
 }
 
 @end
@@ -72,18 +52,45 @@
 @implementation SHKeyValueObserverDeallocationTests
 
 -(void)testOriginalDeallocIsCalled; {
-  STAssertFalse([SHKeyValueObserverTestManager sharedManager].isSuperDealloced, nil);
-  STAssertFalse([SHKeyValueObserverTestManager sharedManager].isSubDealloced, nil);
+  SHKeyValueObserverTestManager *testManager = [[SHKeyValueObserverTestManager alloc] init];
+  
+  STAssertFalse(testManager.isSuperDealloced, nil);
+  STAssertFalse(testManager.isSubDealloced, nil);
   @autoreleasepool {
     SHKeyValueObserverDeallocationSubVerifier * v = [[SHKeyValueObserverDeallocationSubVerifier alloc] init];
+    v.testManager = testManager;
     [v SH_addObserverForKeyPaths:@[@"testProperty"] block:^(id weakSelf, NSString *keyPath, NSDictionary *change) {
       
     }];
   }
-  STAssertTrue([SHKeyValueObserverTestManager sharedManager].isSuperDealloced, nil);
-  STAssertTrue([SHKeyValueObserverTestManager sharedManager].isSubDealloced, nil);
-
-
-  
+  STAssertTrue(testManager.isSuperDealloced, nil);
+  STAssertTrue(testManager.isSubDealloced, nil);
 }
+
+
+-(void)testDeallocOrderingWhenSubclassAndSuperclassObservedIndependently; {
+  SHKeyValueObserverTestManager *superTestManager = [[SHKeyValueObserverTestManager alloc] init];
+  SHKeyValueObserverTestManager *subTestManager = [[SHKeyValueObserverTestManager alloc] init];
+  
+  STAssertFalse(superTestManager.isSuperDealloced, nil);
+  STAssertFalse(subTestManager.isSuperDealloced, nil);
+  STAssertFalse(subTestManager.isSubDealloced, nil);
+  @autoreleasepool {
+    SHKeyValueObserverDeallocationSuperVerifier * superVerifier = [[SHKeyValueObserverDeallocationSuperVerifier alloc] init];
+    superVerifier.testManager = superTestManager;
+    [superVerifier SH_addObserverForKeyPaths:@[@"testProperty"] block:^(id weakSelf, NSString *keyPath, NSDictionary *change) {
+      
+    }];
+    
+    superVerifier.testManager = subTestManager;
+    SHKeyValueObserverDeallocationSubVerifier * subVerifier = [[SHKeyValueObserverDeallocationSubVerifier alloc] init];
+    [subVerifier SH_addObserverForKeyPaths:@[@"testProperty"] block:^(id weakSelf, NSString *keyPath, NSDictionary *change) {
+      
+    }];
+  }
+  STAssertTrue(superTestManager.isSuperDealloced, nil);
+  STAssertTrue(subTestManager.isSuperDealloced, nil);
+  STAssertTrue(subTestManager.isSubDealloced, nil);
+}
+
 @end
