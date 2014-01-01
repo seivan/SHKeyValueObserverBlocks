@@ -62,11 +62,10 @@
   NSString * path = @"playersArray";
   NSArray * sample = @[@(1), @(2)];
   self.subModel.playersArray = sample;
+
   [self.model SH_setBindingObserverKeyPath:path toObject:self.subModel withKeyPath:path];
   
   
-
-
   [[self.subModel mutableArrayValueForKey:path] replaceObjectAtIndex:0 withObject:@"Seivan"];
   XCTAssert([self.model.playersArray containsObject:@"Seivan"]);
   XCTAssertFalse([self.model.playersArray containsObject:@(1)]);

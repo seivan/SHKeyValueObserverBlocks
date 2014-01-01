@@ -32,16 +32,7 @@
 
 -(void)applicationDidFinishLaunching:(NSNotification *)aNotification;{
   
-  
-  [self SH_addObserverForKeyPaths:@[@"playersDictionary.allKeys"] withOptions:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionNew block:^(NSString *keyPath, NSDictionary *change) {
-    NSLog(@"%@ - %@", keyPath, change);
-  }];
-  
-  self.playersDictionary = @{}.mutableCopy;
-  [self.playersDictionary willChangeValueForKey:@"allKeys"];
-  self.playersDictionary[@"lol"] = @"Seivan";
-  [self.playersDictionary didChangeValueForKey:@"allKeys"];
-  
+    
   
   [self SH_addObserverForKeyPath:@"playersArray" block:^(NSKeyValueChange changeType, NSObject * oldValue, NSObject * newValue, NSIndexPath *indexPath) {
     switch (changeType) {
