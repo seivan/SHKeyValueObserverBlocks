@@ -26,7 +26,7 @@
 -(void)testSH_addObserverForKeyPath_block; {
   __block BOOL assertGetCalled = NO;
   __weak typeof(self) weakSelf = self;
-  [self.model SH_addObserverForKeyPath:@"isDead" block:^(NSKeyValueChange changeType, id<NSObject> oldValue, id<NSObject> newValue, NSIndexPath *indexPath) {
+  [self.model SH_addObserverForKeyPath:@"isDead" block:^(NSKeyValueChange changeType, NSObject * oldValue, NSObject * newValue, NSIndexPath *indexPath) {
     XCTAssertEqual(changeType, NSKeyValueChangeSetting);
     XCTAssertNil(indexPath);
     if(weakSelf.model.isDead) {

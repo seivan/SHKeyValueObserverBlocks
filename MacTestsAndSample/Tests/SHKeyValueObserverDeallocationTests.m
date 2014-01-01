@@ -84,7 +84,7 @@
   XCTAssertFalse(subVerifier.testManager.isSuperDealloced);
   XCTAssertFalse(subVerifier.testManager.isSubDealloced);
 
-  [subVerifier SH_setBindingUniObserverKeyPath:@"testProperty" toObject:superVerifier withKeyPath:@"testProperty" transformValueBlock:^id(NSObject *object, NSString *keyPath, id<NSObject> newValue, BOOL *shouldAbort) {
+  [subVerifier SH_setBindingUniObserverKeyPath:@"testProperty" toObject:superVerifier withKeyPath:@"testProperty" transformValueBlock:^id(NSObject *object, NSString *keyPath, NSObject * newValue, BOOL *shouldAbort) {
     return newValue;
   }];
   NSString * assignment= @"Testing my string";

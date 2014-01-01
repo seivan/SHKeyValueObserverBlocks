@@ -103,7 +103,7 @@ typedef NS_OPTIONS(NSUInteger, SHKeyValueObserverBlockType) {
   if (self) {
     self.mapBlocks            = [NSMapTable weakToStrongObjectsMapTable];
     self.disabledClassesForAutoRemoving = [NSMutableSet set];
-    [self SH_memoryDebugger];
+//    [self SH_memoryDebugger];
   }
   
   return self;
@@ -266,7 +266,7 @@ typedef NS_OPTIONS(NSUInteger, SHKeyValueObserverBlockType) {
   //Got to get a better name, and also a better solution than the BOOL flag
   __block BOOL isAvailableForKVO = YES;
   
-  SHKeyValueObserverBindingTransformBlock validationBlock = ^id(NSObject * object, NSString * keyPath, id<NSObject> newValue, BOOL *shouldAbort) {
+  SHKeyValueObserverBindingTransformBlock validationBlock = ^id(NSObject * object, NSString * keyPath, NSObject * newValue, BOOL *shouldAbort) {
     if(isAvailableForKVO){
       isAvailableForKVO = NO;
       *shouldAbort = NO;
@@ -289,7 +289,7 @@ typedef NS_OPTIONS(NSUInteger, SHKeyValueObserverBlockType) {
 -(NSString *)SH_setBindingUniObserverKeyPath:(NSString *)theKeyPath
                                     toObject:(NSObject *)theObject
                                  withKeyPath:(NSString *)theOtherKeyPath; {
-  return [self SH_setBindingUniObserverKeyPath:theKeyPath toObject:theObject withKeyPath:theOtherKeyPath transformValueBlock:^id(NSObject *object, NSString *keyPath, id<NSObject> newValue, BOOL *shouldAbort) {
+  return [self SH_setBindingUniObserverKeyPath:theKeyPath toObject:theObject withKeyPath:theOtherKeyPath transformValueBlock:^id(NSObject *object, NSString *keyPath, NSObject * newValue, BOOL *shouldAbort) {
     return newValue;
   }];
 }
@@ -309,7 +309,7 @@ typedef NS_OPTIONS(NSUInteger, SHKeyValueObserverBlockType) {
   __weak typeof(theObject) weakObserver = theObject;
   
   
-  NSString * identifier = [self SH_addObserverForKeyPath:theKeyPath block:^(NSKeyValueChange changeType, id<NSObject> oldValue, id<NSObject> newValue, NSIndexPath *indexPath) {
+  NSString * identifier = [self SH_addObserverForKeyPath:theKeyPath block:^(NSKeyValueChange changeType, NSObject * oldValue, NSObject * newValue, NSIndexPath *indexPath) {
     BOOL shouldAbort = NO;
     if(changeType != NSKeyValueChangeSetting) newValue = [weakSelf valueForKeyPath:theKeyPath];
     else if ([newValue isEqual:[NSNull null]]) newValue = nil;

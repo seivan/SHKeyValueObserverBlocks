@@ -1,16 +1,8 @@
-//
-//  Example
-//
-//  Created by Seivan Heidari on 5/16/13.
-//  Copyright (c) 2013 Seivan Heidari. All rights reserved.
-//
 
-
-#pragma mark - Block Defs
-
+#pragma mark - Block Definitions
 
 typedef void (^SHKeyValueObserverSplatBlock)(NSKeyValueChange changeType,
-                                             id<NSObject> oldValue, id<NSObject> newValue,
+                                             NSObject * oldValue, NSObject * newValue,
                                              NSIndexPath * indexPath);
 
 typedef void (^SHKeyValueObserverDefaultBlock)(NSString * keyPath,
@@ -18,7 +10,7 @@ typedef void (^SHKeyValueObserverDefaultBlock)(NSString * keyPath,
 
 typedef id(^SHKeyValueObserverBindingTransformBlock)(NSObject * object,
                                                      NSString * keyPath,
-                                                     id<NSObject> newValue,
+                                                     NSObject * newValue,
                                                      BOOL *shouldAbort);
 
 @interface NSObject (SHKeyValueObserverBlocks)
@@ -56,12 +48,6 @@ typedef id(^SHKeyValueObserverBindingTransformBlock)(NSObject * object,
                                     toObject:(NSObject *)theObject
                                  withKeyPath:(NSString *)theOtherKeyPath
                              transformValueBlock:(SHKeyValueObserverBindingTransformBlock)theBlock;
-
-
-
-
-
-
 
 
 

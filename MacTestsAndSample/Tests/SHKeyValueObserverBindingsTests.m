@@ -83,30 +83,52 @@
 -(void)testSetBindingsWithKeyedEnumerations; {
 
   NSString * path = @"playersDictionary";
-
+  NSString * key = @"myKey";
+  NSString * keyPath = [NSString stringWithFormat:@"playersDictionary.%@", key];
 
   XCTAssertNil(self.subModel.playersDictionary);
   XCTAssertNil(self.model.playersDictionary);
   XCTAssertNotEqual(self.model, self.subModel);
   
-  [self.subModel SH_setBindingObserverKeyPath:path toObject:self.model withKeyPath:path];
+  __block BOOL ignoreKVO = NO;
+  SHKeyValueObserverBindingTransformBlock block = ^id(NSObject *object, NSString *keyPath, NSObject *newValue, BOOL *shouldAbort) {
+    if(ignoreKVO) {
+      ignoreKVO = NO;
+      *shouldAbort = YES;
+      return nil;
+    }
+    else {
+      ignoreKVO = YES;
+      return [newValue mutableCopy];
+    }
+  };
   
+  [self.subModel SH_setBindingObserverKeyPath:keyPath toObject:self.model withKeyPath:keyPath];
   
-  self.subModel.playersDictionary = @{@"seivan" : @(0)}.mutableCopy;
-  XCTAssertEqualObjects(self.subModel.playersDictionary, self.model.playersDictionary);
-  XCTAssertEqualObjects(@{@"seivan" : @(0)}.mutableCopy, self.model.playersDictionary);
-  
-  [self.subModel.playersDictionary setObject:@(1) forKey:@"seivan"];
-  XCTAssertEqualObjects(self.subModel.playersDictionary, self.model.playersDictionary);
+  [self.subModel SH_setBindingUniObserverKeyPath:path toObject:self.model withKeyPath:path transformValueBlock:block];
+  [self.model SH_setBindingUniObserverKeyPath:path toObject:self.subModel withKeyPath:path transformValueBlock:block];
 
-  [self.subModel.playersDictionary removeObjectForKey:@"seivan"];
-  XCTAssertEqualObjects(self.subModel.playersDictionary, self.model.playersDictionary);
   
-  [self.subModel.playersDictionary setObject:@(3) forKey:@"seivan"];
+  
+  NSMutableDictionary * sample = @{@"theKey" : @"theValue"}.mutableCopy;
+  
+  self.model.playersDictionary = sample;
+  
+  XCTAssertNotNil(self.subModel.playersDictionary);
   XCTAssertEqualObjects(self.subModel.playersDictionary, self.model.playersDictionary);
+  XCTAssertEqualObjects(self.subModel.playersDictionary, sample);
+  XCTAssertFalse(self.subModel.playersDictionary == self.model.playersDictionary);
 
-  [self.subModel.playersDictionary setObject:@(99) forKey:@"chris"];
+  
+  [self.subModel.playersDictionary setObject:@(1) forKey:key];
   XCTAssertEqualObjects(self.subModel.playersDictionary, self.model.playersDictionary);
+  XCTAssertNotNil(self.model.playersDictionary[key]);
+  
+
+  [self.model.playersDictionary removeObjectForKey:key];
+  XCTAssertEqualObjects(self.subModel.playersDictionary, self.model.playersDictionary);
+  XCTAssertNil(self.subModel.playersDictionary[key]);
+  
   
 }
 
@@ -115,7 +137,7 @@
   NSString * path = @"playersArray";
   __block BOOL assertBlockGotCalled = NO;
   __block BOOL isAborting = NO;
-  [self.subModel SH_setBindingUniObserverKeyPath:path toObject:self.model withKeyPath:path transformValueBlock:^id(NSObject *object, NSString *keyPath, id<NSObject> newValue, BOOL *shouldAbort) {
+  [self.subModel SH_setBindingUniObserverKeyPath:path toObject:self.model withKeyPath:path transformValueBlock:^id(NSObject *object, NSString *keyPath, NSObject * newValue, BOOL *shouldAbort) {
     XCTAssertEqualObjects(keyPath, path);
     XCTAssertEqualObjects(object, self.subModel);
     assertBlockGotCalled = YES;
@@ -162,7 +184,7 @@
   NSString * path = @"playersArray";
   __block BOOL assertBlockGotCalled = NO;
   __block BOOL isAborting = NO;
-  NSString * identifier = [self.subModel SH_setBindingUniObserverKeyPath:path toObject:self.model withKeyPath:path transformValueBlock:^id(NSObject *object, NSString *keyPath, id<NSObject> newValue, BOOL *shouldAbort) {
+  NSString * identifier = [self.subModel SH_setBindingUniObserverKeyPath:path toObject:self.model withKeyPath:path transformValueBlock:^id(NSObject *object, NSString *keyPath, NSObject * newValue, BOOL *shouldAbort) {
     assertBlockGotCalled = YES;
     *shouldAbort = isAborting;
     return newValue;
@@ -214,7 +236,7 @@
   XCTAssertNil(self.model.playersDictionary);
   XCTAssertNotEqual(self.model, self.subModel);
   
-  [self.subModel SH_setBindingUniObserverKeyPath:path toObject:self.model withKeyPath:path transformValueBlock:^id(NSObject *object, NSString *keyPath, id<NSObject> newValue, BOOL *shouldAbort) {
+  [self.subModel SH_setBindingUniObserverKeyPath:path toObject:self.model withKeyPath:path transformValueBlock:^id(NSObject *object, NSString *keyPath, NSObject * newValue, BOOL *shouldAbort) {
     return newValue;
   }];
   
