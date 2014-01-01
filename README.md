@@ -37,7 +37,12 @@ or
 ##### Adding Observer on an NSArray to keep track of your data source
 ```objective-c
   NSString * path = @"languagesArray";
-  NSString * identifier = [self SH_addObserverForKeyPath:path block:^(NSKeyValueChange changeType, NSObject * oldValue, NSObject * newValue, NSIndexPath *indexPath) {
+  NSString * identifier = [self SH_addObserverForKeyPath:path 
+                                                  block:^(
+                                                  NSKeyValueChange changeType, 
+                                                  NSObject * oldValue, 
+                                                  NSObject * newValue, 
+                                                  NSIndexPath *indexPath) {
     switch (changeType) {
       case NSKeyValueChangeSetting:
         NSLog(@"Setting %@", newValue);
@@ -70,7 +75,14 @@ or
 ##### Set a uni directional binding with a transform block
 
 ```objective-c
-NSString * identifier =  [self SH_setBindingUniObserverKeyPath:@"playersDictionary" toObject:self withKeyPath:@"othersDictionary" transformValueBlock:^id(NSObject *object, NSString *keyPath, NSObject * newValue, BOOL *shouldAbort) {
+NSString * identifier =  [self SH_setBindingUniObserverKeyPath:@"playersDictionary" 
+                                                      toObject:self
+                                                   withKeyPath:@"othersDictionary"
+                                           transformValueBlock:^id(
+                                           NSObject *object, 
+                                           NSString *keyPath, 
+                                           NSObject * newValue, 
+                                           BOOL *shouldAbort) {
     return newValue.mutableCopy ;
   }];
 
@@ -79,7 +91,9 @@ NSString * identifier =  [self SH_setBindingUniObserverKeyPath:@"playersDictiona
 ##### Set a bi-directional binding
 
 ```objective-c
-NSArray * identifiers = [self.model SH_setBindingObserverKeyPath:@"errors" toObject:self withKeyPath:@"errors"];
+NSArray * identifiers = [self.model SH_setBindingObserverKeyPath:@"errors" 
+                                                        toObject:self 
+                                                     withKeyPath:@"errors"];
 ```
 
 
