@@ -2,18 +2,19 @@ Pod::Spec.new do |s|
   name         = "SHKeyValueObserverBlocks"
   url          = "https://github.com/seivan/#{name}"
   git_url      = "#{url}.git"
-  version      = "1.3.0"
+  version      = "2.0.0"
   source_files = "#{name}/**/*.{h,m}"
   
   s.name         = name
   s.version      = version
-  s.summary      = "Prefixed Key Value Observers with Blocks without swizzling"
+  s.summary      = "Data bindings and Key Value Observers with blocks"
   s.description  = <<-DESC
 
-                    Key Value Observing with blocks on top of NSObject.
+                    Data-Bindings & Key Value Observing with blocks on top of NSObject.
                     Blocks are hold with a weak reference so you don't have to cleanup when your object is gone.
-                    However you still will need to remove observers - this is because we don't want to swizzle. 
+                    Optional Swizzling for automatic removal of blocks
   
+                    * Bi- and uni-directional data-bindings. 
                     * Blocks and observers are self maintained.
                     * Weak referenced blocks.
                     * Prefixed selectors.
@@ -34,7 +35,7 @@ Pod::Spec.new do |s|
 
   s.ios.deployment_target = '6.0'
   s.osx.deployment_target = '10.8'
-  s.dependency 'RSSwizzle'#, '~> 1.0.0 '
+  s.dependency 'RSSwizzle', '~>0.1.0'
 
   s.source_files = source_files
   s.requires_arc = true
