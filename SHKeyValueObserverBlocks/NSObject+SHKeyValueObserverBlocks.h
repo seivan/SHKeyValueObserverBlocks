@@ -1,4 +1,8 @@
 
+
+#define SHKey(selector) NSStringFromSelector(@selector(selector))
+
+
 #pragma mark - Block Definitions
 
 typedef void (^SHKeyValueObserverSplatBlock)(NSKeyValueChange changeType,
@@ -55,6 +59,5 @@ typedef id(^SHKeyValueObserverBindingTransformBlock)(NSObject * object,
 -(void)SH_removeAllObserversWithIdentifiers:(NSArray *)theIdentifiers;
 -(void)SH_removeAllObserversForKeyPaths:(NSArray *)theKeyPaths;
 -(void)SH_removeAllObservers;
-
 
 @end

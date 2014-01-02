@@ -8,7 +8,6 @@
 #import <objc/runtime.h>
 #import <RSSwizzle.h>
 
-
 typedef NS_OPTIONS(NSUInteger, SHKeyValueObserverBlockType) {
   SHKeyValueObserverBlockTypeDefault,
   SHKeyValueObserverBlockTypeSplat
@@ -414,7 +413,6 @@ static char *kDisgustingSwizzledVariableKey;
   }
   return _identifier;
 }
-
 
 
 #pragma mark - Properties

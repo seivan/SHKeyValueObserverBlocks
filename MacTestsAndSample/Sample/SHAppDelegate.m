@@ -11,6 +11,7 @@
 #import "SHKeyValueObserverBlocks.h"
 
 
+
 @interface SHAppDelegate ()
 @property(nonatomic,strong) NSOrderedSet          * playersOrderedSet;
 @property(nonatomic,strong) NSSet                 * playersSet;
@@ -31,10 +32,9 @@
 
 
 -(void)applicationDidFinishLaunching:(NSNotification *)aNotification;{
-  
-    
-  
-  [self SH_addObserverForKeyPath:@"playersArray" block:^(NSKeyValueChange changeType, NSObject * oldValue, NSObject * newValue, NSIndexPath *indexPath) {
+
+  NSString * path = @"playersArray";
+  [self SH_addObserverForKeyPath:path block:^(NSKeyValueChange changeType, NSObject * oldValue, NSObject * newValue, NSIndexPath *indexPath) {
     switch (changeType) {
       case NSKeyValueChangeSetting:
         NSLog(@"Setting %@", newValue);
@@ -54,7 +54,7 @@
   }];
   
   NSLog(@"Starting with NSArray");
-  NSString * path = @"playersArray";
+
   self.playersArray = @[@"Python"];
   [[self mutableArrayValueForKey:path] addObject:@"C++"];
   [[self mutableArrayValueForKey:path] addObject:@"Objective-c"];

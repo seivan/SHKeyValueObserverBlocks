@@ -96,6 +96,14 @@ NSArray * identifiers = [self.model SH_setBindingObserverKeyPath:@"errors"
                                                      withKeyPath:@"errors"];
 ```
 
+##### Can use the macro SHKey() for using selectors as a keyPath for autocomplete goodness. 
+
+```objective-c
+NSArray * identifiers = [self.model SH_setBindingObserverKeyPath:@"errors" 
+                                                        toObject:self 
+                                                     withKeyPath:SHKey(errors)"];
+```
+
 
 
 ##[API](https://github.com/seivan/SHKeyValueObserverBlocks/blob/develop/SHKeyValueObserverBlocks/NSObject%2BSHKeyValueObserverBlocks.h)
