@@ -4,8 +4,10 @@
 [![Version](https://cocoapod-badges.herokuapp.com/v/SHKeyValueObserverBlocks/badge.png)](http://cocoadocs.org/docsets/SHKeyValueObserverBlocks)
 [![Platform](https://cocoapod-badges.herokuapp.com/p/SHKeyValueObserverBlocks/badge.png)](http://cocoadocs.org/docsets/SHKeyValueObserverBlocks)
 
-> This pod is used by [`SHFoundationAdditions`](https://github.com/seivan/SHFoundationAdditions) as part of many components covering to plug the holes missing from Foundation.
-There is also [`for UIKit`](https://github.com/seivan/SHUIKitBlocks) and others on the way; CoreLocation, GameKit, MapKit and other aspects of an iOS application's architecture.
+> This pod is used by [`SHFoundationAdditions`](https://github.com/seivan/SHFoundationAdditions) as part of several components improving Foundation, UIKit, CoreLocation, GameKit, MapKit and other aspects of an iOS application's architecture
+
+There is also [`for UIKit`](https://github.com/seivan/SHUIKitBlocks) for extending UIKit with block alternatives to most components
+
 
 ##Overview
 
