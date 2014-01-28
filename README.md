@@ -1,8 +1,8 @@
 #SHKeyValueObserverBlocks
 
 [![Build Status](https://travis-ci.org/seivan/SHKeyValueObserverBlocks.png?branch=master)](https://travis-ci.org/seivan/SHKeyValueObserverBlocks)
-[![Version](http://cocoapod-badges.herokuapp.com/v/SHKeyValueObserverBlocks/badge.png)](https://cocoadocs.org/docsets/SHKeyValueObserverBlocks)
-[![Platform](http://cocoapod-badges.herokuapp.com/p/SHKeyValueObserverBlocks/badge.png)](https://cocoadocs.org/docsets/SHKeyValueObserverBlocks)
+[![Version](http://cocoapod-badges.herokuapp.com/v/SHKeyValueObserverBlocks/badge.png)](http://cocoadocs.org/docsets/SHKeyValueObserverBlocks)
+[![Platform](http://cocoapod-badges.herokuapp.com/p/SHKeyValueObserverBlocks/badge.png)](http://cocoadocs.org/docsets/SHKeyValueObserverBlocks)
 
 > This pod is used by [`SHFoundationAdditions`](https://github.com/seivan/SHFoundationAdditions) as part of several components improving Foundation, UIKit, CoreLocation, GameKit, MapKit and other aspects of an iOS application's architecture
 
