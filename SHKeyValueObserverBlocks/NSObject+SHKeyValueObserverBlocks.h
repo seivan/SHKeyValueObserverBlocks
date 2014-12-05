@@ -6,15 +6,15 @@
 #pragma mark - Block Definitions
 
 typedef void (^SHKeyValueObserverSplatBlock)(NSKeyValueChange changeType,
-                                             NSObject * oldValue, NSObject * newValue,
+                                             id oldValue, id newValue,
                                              NSIndexPath * indexPath);
 
 typedef void (^SHKeyValueObserverDefaultBlock)(NSString * keyPath,
                                                NSDictionary * change);
 
-typedef id(^SHKeyValueObserverBindingTransformBlock)(NSObject * object,
+typedef id(^SHKeyValueObserverBindingTransformBlock)(id object,
                                                      NSString * keyPath,
-                                                     NSObject * newValue,
+                                                     id newValue,
                                                      BOOL *shouldAbort);
 
 @interface NSObject (SHKeyValueObserverBlocks)

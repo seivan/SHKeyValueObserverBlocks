@@ -43,8 +43,8 @@ or
   NSString * identifier = [self SH_addObserverForKeyPath:path 
                                                   block:^(
                                                   NSKeyValueChange changeType, 
-                                                  NSObject * oldValue, 
-                                                  NSObject * newValue, 
+                                                  id oldValue, 
+                                                  id newValue, 
                                                   NSIndexPath *indexPath) {
     switch (changeType) {
       case NSKeyValueChangeSetting:
@@ -57,7 +57,7 @@ or
         NSLog(@"Removal %@", oldValue);
         break;
       case NSKeyValueChangeReplacement:
-        NSLog(@"ChangeReplacement %@", newValue);
+        NSLog(@"ChangeReplacement %@ with %@", oldValue, newValue);
         break;
       default:
         break;
@@ -82,11 +82,11 @@ NSString * identifier =  [self SH_setBindingUniObserverKeyPath:@"playersDictiona
                                                       toObject:self
                                                    withKeyPath:@"othersDictionary"
                                            transformValueBlock:^id(
-                                           NSObject *object, 
+                                           id object, 
                                            NSString *keyPath, 
-                                           NSObject * newValue, 
+                                           id newValue, 
                                            BOOL *shouldAbort) {
-    return newValue.mutableCopy ;
+    return ((NSObject *)newValue).mutableCopy ;
   }];
 
 ```
@@ -116,15 +116,15 @@ NSArray * identifiers = [self.model SH_setBindingObserverKeyPath:@"errors"
 #pragma mark - Block Definitions
 
 typedef void (^SHKeyValueObserverSplatBlock)(NSKeyValueChange changeType,
-                                             id<NSObject> oldValue, id<NSObject> newValue,
+                                             id oldValue, id newValue,
                                              NSIndexPath * indexPath);
 
 typedef void (^SHKeyValueObserverDefaultBlock)(NSString * keyPath,
                                                NSDictionary * change);
 
-typedef id(^SHKeyValueObserverBindingTransformBlock)(NSObject * object,
+typedef id(^SHKeyValueObserverBindingTransformBlock)(id object,
                                                      NSString * keyPath,
-                                                     id<NSObject> newValue,
+                                                     id newValue,
                                                      BOOL *shouldAbort);
 
 @interface NSObject (SHKeyValueObserverBlocks)

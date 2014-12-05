@@ -34,7 +34,7 @@
 -(void)applicationDidFinishLaunching:(NSNotification *)aNotification;{
 
   NSString * path = @"playersArray";
-  [self SH_addObserverForKeyPath:path block:^(NSKeyValueChange changeType, NSObject * oldValue, NSObject * newValue, NSIndexPath *indexPath) {
+  [self SH_addObserverForKeyPath:path block:^(NSKeyValueChange changeType, NSString * oldValue, NSString * newValue, NSIndexPath *indexPath) {
     switch (changeType) {
       case NSKeyValueChangeSetting:
         NSLog(@"Setting %@", newValue);
@@ -46,7 +46,7 @@
         NSLog(@"Removal %@", oldValue);
         break;
       case NSKeyValueChangeReplacement:
-        NSLog(@"ChangeReplacement %@", newValue);
+        NSLog(@"ChangeReplacement %@ with %@", oldValue, newValue);
         break;
       default:
         break;
@@ -63,12 +63,12 @@
   NSLog(@"%@", self.playersArray);
 //
 //  
-  [self SH_setBindingUniObserverKeyPath:@"playersDictionary.myKey" toObject:self withKeyPath:@"othersDictionary.myKey" transformValueBlock:^id(NSObject *object, NSString *keyPath, NSObject * newValue, BOOL *shouldAbort) {
+  [self SH_setBindingUniObserverKeyPath:@"playersDictionary.myKey" toObject:self withKeyPath:@"othersDictionary.myKey" transformValueBlock:^id(id object, NSString *keyPath, id newValue, BOOL *shouldAbort) {
     return newValue;
   }];
 
-  [self SH_setBindingUniObserverKeyPath:@"playersDictionary" toObject:self withKeyPath:@"othersDictionary" transformValueBlock:^id(NSObject *object, NSString *keyPath, NSObject * newValue, BOOL *shouldAbort) {
-    return newValue.mutableCopy ;
+  [self SH_setBindingUniObserverKeyPath:@"playersDictionary" toObject:self withKeyPath:@"othersDictionary" transformValueBlock:^id(id object, NSString *keyPath, id newValue, BOOL *shouldAbort) {
+    return ((NSObject *)newValue).mutableCopy ;
   }];
 
   

@@ -46,7 +46,6 @@ typedef NS_OPTIONS(NSUInteger, SHKeyValueObserverBlockType) {
   keyValueObserver.bindingsIdentifiers = [NSMapTable weakToStrongObjectsMapTable];
   keyValueObserver.bindingTargets = [NSHashTable weakObjectsHashTable];
   return keyValueObserver;
-  
 }
 
 -(BOOL)isObserving; {
@@ -235,12 +234,9 @@ typedef NS_OPTIONS(NSUInteger, SHKeyValueObserverBlockType) {
          }
          
          
-         // You MUST always cast implementation to the correct function pointer.
          int (*originalIMP)(__unsafe_unretained id, SEL);
          originalIMP = (__typeof(originalIMP))[swizzleInfo getOriginalImplementation];
-         // Calling original implementation.
          originalIMP(self,selector);
-         // Returning modified return value.
          
        };
      }
