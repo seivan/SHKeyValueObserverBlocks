@@ -5,34 +5,34 @@
 	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
 	<false/>
 	<key>IDESourceControlProjectIdentifier</key>
-	<string>5AA1352F-0260-45B9-83B3-21BD74DA2896</string>
+	<string>7CEB6ABC-9559-4AF4-9D99-E9BF9564C4DB</string>
 	<key>IDESourceControlProjectName</key>
 	<string>Sample</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
-		<key>9B50CD63-00B7-496B-8224-596B5034FE0B</key>
-		<string>ssh://github.com/seivan/SHKeyValueObserverBlocks.git</string>
+		<key>EF81E16BBF19FD4174AB698709F5FF18DD0F5633</key>
+		<string>github.com:seivan/SHKeyValueObserverBlocks.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
 	<string>MacTestsAndSample/Sample.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
-		<key>9B50CD63-00B7-496B-8224-596B5034FE0B</key>
+		<key>EF81E16BBF19FD4174AB698709F5FF18DD0F5633</key>
 		<string>../..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
-	<string>ssh://github.com/seivan/SHKeyValueObserverBlocks.git</string>
+	<string>github.com:seivan/SHKeyValueObserverBlocks.git</string>
 	<key>IDESourceControlProjectVersion</key>
-	<integer>110</integer>
+	<integer>111</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>9B50CD63-00B7-496B-8224-596B5034FE0B</string>
+	<string>EF81E16BBF19FD4174AB698709F5FF18DD0F5633</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>9B50CD63-00B7-496B-8224-596B5034FE0B</string>
+			<string>EF81E16BBF19FD4174AB698709F5FF18DD0F5633</string>
 			<key>IDESourceControlWCCName</key>
 			<string>SHKeyValueObserverBlocks</string>
 		</dict>

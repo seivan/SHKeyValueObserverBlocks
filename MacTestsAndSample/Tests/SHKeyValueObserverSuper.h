@@ -7,7 +7,6 @@
 //
 
 #import <XCTest/XCTest.h>
-#import <SHTestCaseAdditions.h>
 #import "SHKeyValueObserverBlocks.h"
 
 #import "SHModel.h"

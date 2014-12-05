@@ -1,22 +1,17 @@
 PODS:
   - RSSwizzle (0.1.0)
-  - SHKeyValueObserverBlocks (2.0.0):
+  - SHKeyValueObserverBlocks (2.0.2):
     - RSSwizzle (~> 0.1.0)
-  - SHTestCaseAdditions (1.4.1):
-    - SHTestCaseAdditions/XCTest
-  - SHTestCaseAdditions/XCTest (1.4.1)
 
 DEPENDENCIES:
   - SHKeyValueObserverBlocks (from `../`)
-  - SHTestCaseAdditions
 
 EXTERNAL SOURCES:
   SHKeyValueObserverBlocks:
     :path: ../
 
 SPEC CHECKSUMS:
-  RSSwizzle: 41c280b15547f7c94f1273111fe4ce29d5d14e3a
-  SHKeyValueObserverBlocks: 3e8c12cd2182d773c22732837bcc4be4d6e6d8d4
-  SHTestCaseAdditions: ff32e10731f37effd08c254e538c3e7998f74921
+  RSSwizzle: ab39962b7ec56d19c2318ec1127e253797121363
+  SHKeyValueObserverBlocks: 35ee21caa68d3c8bb38cb4ebe529f510d745dcbd
 
-COCOAPODS: 0.28.0
+COCOAPODS: 0.35.0

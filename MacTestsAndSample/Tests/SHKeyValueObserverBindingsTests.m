@@ -54,7 +54,9 @@
   [self.model SH_setBindingObserverKeyPath:keyPath toObject:self.subModel withKeyPath:keyPath];
   CGSize size = CGSizeMake(666, 666);
   self.subModel.size = size;
-  XCTAssertEqual(size, self.model.size);
+//  XCTAssertEqual(size, self.model.size);
+  XCTAssertTrue(CGSizeEqualToSize(size, self.model.size));
+
 }
 
 
