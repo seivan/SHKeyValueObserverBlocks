@@ -205,5 +205,10 @@
   
 }
 
+-(void)testSH_removeAllObserversWithIdentifiersWithoutObserver; {
+  [self.model SH_removeAllObserversWithIdentifiers:@[@"DAMN DUDE", @"DAMN DUDEddddd"]];
+  [self.model SH_removeAllObserversForKeyPaths:@[@"DAMN DUDE", @"DAMN DUDEddddd"]];
+}
+
 
 @end
