@@ -1,6 +1,6 @@
 PODS:
   - RSSwizzle (0.1.0)
-  - SHKeyValueObserverBlocks (2.0.2):
+  - SHKeyValueObserverBlocks (2.1.0):
     - RSSwizzle (~> 0.1.0)
 
 DEPENDENCIES:
@@ -12,6 +12,6 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   RSSwizzle: ab39962b7ec56d19c2318ec1127e253797121363
-  SHKeyValueObserverBlocks: 35ee21caa68d3c8bb38cb4ebe529f510d745dcbd
+  SHKeyValueObserverBlocks: d4d6fda79a6fd84c4b42bc9f1054bfbfff0a9123
 
 COCOAPODS: 0.35.0

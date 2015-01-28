@@ -15,6 +15,6 @@
 // SHKeyValueObserverBlocks
 #define COCOAPODS_POD_AVAILABLE_SHKeyValueObserverBlocks
 #define COCOAPODS_VERSION_MAJOR_SHKeyValueObserverBlocks 2
-#define COCOAPODS_VERSION_MINOR_SHKeyValueObserverBlocks 0
-#define COCOAPODS_VERSION_PATCH_SHKeyValueObserverBlocks 2
+#define COCOAPODS_VERSION_MINOR_SHKeyValueObserverBlocks 1
+#define COCOAPODS_VERSION_PATCH_SHKeyValueObserverBlocks 0
 

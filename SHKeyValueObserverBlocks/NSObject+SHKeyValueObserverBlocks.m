@@ -342,7 +342,16 @@ typedef NS_OPTIONS(NSUInteger, SHKeyValueObserverBlockType) {
   [theIdentifiers enumerateObjectsUsingBlock:^(NSString * identifier, __unused NSUInteger idx, __unused BOOL *stop) {
     SHKeyValueObserverBlockHandler * blockHandler = weakSelf.SH_keyValueObserver.blocks[identifier];
     [blockHandler.keyPaths enumerateObjectsUsingBlock:^(NSString * keyPath, __unused NSUInteger idx, __unused BOOL *stop) {
-      [weakSelf removeObserver:weakSelf.SH_keyValueObserver forKeyPath:keyPath context:(__bridge void *)(identifier)];
+      @try {
+        [weakSelf removeObserver:weakSelf.SH_keyValueObserver forKeyPath:keyPath context:(__bridge void *)(identifier)];
+      }
+      @catch (NSException *exception) {
+      
+      }
+      @finally {
+      
+      }
+      
     }];
     [weakSelf.SH_keyValueObserver.blocks removeObjectForKey:identifier];
     [weakSelf SH_removeBindingsWithIdentifier:identifier];
